@@ -1,0 +1,110 @@
+[
+  {
+    "width": 360,
+    "theme": "dark",
+    "heroHeight": 1345.328125,
+    "projectsTop": 1418.328125,
+    "overflow": true,
+    "primaryBackground": "rgb(56, 189, 248)",
+    "h1": "Problemas complexos.Soluções bem construídas."
+  },
+  {
+    "width": 360,
+    "theme": "light",
+    "heroHeight": 1345.328125,
+    "projectsTop": 1418.328125,
+    "overflow": true,
+    "primaryBackground": "rgb(4, 109, 158)",
+    "h1": "Problemas complexos.Soluções bem construídas."
+  },
+  {
+    "width": 390,
+    "theme": "dark",
+    "heroHeight": 1285.328125,
+    "projectsTop": 1358.328125,
+    "overflow": true,
+    "primaryBackground": "rgb(56, 189, 248)",
+    "h1": "Problemas complexos.Soluções bem construídas."
+  },
+  {
+    "width": 390,
+    "theme": "light",
+    "heroHeight": 1285.328125,
+    "projectsTop": 1358.328125,
+    "overflow": true,
+    "primaryBackground": "rgb(4, 109, 158)",
+    "h1": "Problemas complexos.Soluções bem construídas."
+  },
+  {
+    "width": 768,
+    "theme": "dark",
+    "heroHeight": 1106.796875,
+    "projectsTop": 1179.796875,
+    "overflow": true,
+    "primaryBackground": "rgb(56, 189, 248)",
+    "h1": "Problemas complexos.Soluções bem construídas."
+  },
+  {
+    "width": 768,
+    "theme": "light",
+    "heroHeight": 1106.796875,
+    "projectsTop": 1179.796875,
+    "overflow": true,
+    "primaryBackground": "rgb(3, 108, 156)",
+    "h1": "Problemas complexos.Soluções bem construídas."
+  },
+  {
+    "width": 1024,
+    "theme": "dark",
+    "heroHeight": 788.59375,
+    "projectsTop": 877.59375,
+    "overflow": false,
+    "primaryBackground": "rgb(56, 189, 248)",
+    "h1": "Problemas complexos.Soluções bem construídas."
+  },
+  {
+    "width": 1024,
+    "theme": "light",
+    "heroHeight": 788.59375,
+    "projectsTop": 877.59375,
+    "overflow": false,
+    "primaryBackground": "rgb(3, 108, 156)",
+    "h1": "Problemas complexos.Soluções bem construídas."
+  },
+  {
+    "width": 1440,
+    "theme": "dark",
+    "heroHeight": 793.796875,
+    "projectsTop": 882.796875,
+    "overflow": false,
+    "primaryBackground": "rgb(56, 189, 248)",
+    "h1": "Problemas complexos.Soluções bem construídas."
+  },
+  {
+    "width": 1440,
+    "theme": "light",
+    "heroHeight": 793.796875,
+    "projectsTop": 882.796875,
+    "overflow": false,
+    "primaryBackground": "rgb(3, 108, 156)",
+    "h1": "Problemas complexos.Soluções bem construídas."
+  },
+  {
+    "width": 1920,
+    "theme": "dark",
+    "heroHeight": 815.796875,
+    "projectsTop": 904.796875,
+    "overflow": false,
+    "primaryBackground": "rgb(56, 189, 248)",
+    "h1": "Problemas complexos.Soluções bem construídas."
+  },
+  {
+    "width": 1920,
+    "theme": "light",
+    "heroHeight": 815.796875,
+    "projectsTop": 904.796875,
+    "overflow": false,
+    "primaryBackground": "rgb(3, 108, 156)",
+    "h1": "Problemas complexos.Soluções bem construídas."
+  }
+]
