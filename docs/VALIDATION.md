@@ -23,7 +23,7 @@ O build de SEO foi executado com `SITE_URL=https://portfolio.test`, domínio res
 
 Cobertura:
 
-- Homes, cards, filtros por categoria e restauração da lista completa.
+- Homes, cards, filtros por categoria e restauração da lista completa. Verificação adicional dos sete filtros: back-end 2, IA 1, pesquisa 1, sistemas 3, jogos 2, automação 1 e dados 1.
 - Tema claro/escuro persistido após reload e fallback com storage bloqueado.
 - Alternância de idioma preservando estudo e fragmento de seção.
 - Diagrama por teclado, estado selecionado e descrição anunciada.
@@ -83,3 +83,7 @@ Originais PNG: `artifacts/screenshots/`. Relatório Playwright: `playwright-repo
 ## Limites
 
 Não foram reexecutadas as suítes dos projetos apresentados. Não houve auditoria científica, teste com leitor de tela, Safari real ou deploy Cloudflare. Código e conteúdo privados não foram consultados nem copiados ao produzir os estudos; rascunhos são excluídos das rotas. As pendências editoriais constam em CONTENT_INVENTORY.md e ROADMAP.md.
+
+## GitHub Actions
+
+O [run 44936116866](https://github.com/DanielKulique/Portfolio/actions/runs/44936116866), no commit `22187cb7bac7eaba328982919f08a52e62676f4b`, concluiu com **success**. Passaram npm ci, tipos Astro/Vue, lint, build, links e Playwright, além do upload do relatório e capturas. Um ajuste posterior limitou-se à formatação de theme.js/SystemDiagram e ao registro desses resultados; os quatro testes locais de tema/diagrama foram repetidos e aprovados.

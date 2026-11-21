@@ -78,8 +78,7 @@ const tech = ['Swing / console', 'TCP + JSON', 'Java services', 'MySQL / JDBC'];
     <div class="diagram-bottom mono">
       <span>{{
         locale === 'en' ? 'SELECT A LAYER TO EXPLORE' : 'SELECIONE UMA CAMADA'
-      }}</span
-      ><span aria-hidden="true">&lt; / &gt;</span>
+      }}</span><span aria-hidden="true">&lt; / &gt;</span>
     </div>
   </div>
 </template>

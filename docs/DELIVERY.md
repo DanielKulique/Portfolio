@@ -30,11 +30,11 @@ Capturas desktop/mobile, claro/escuro, pt-BR/en, estudo e menu. [Prévias e cami
 
 ## 8. Commits
 
-Alterações organizadas em commits semânticos de arquitetura, implementação, testes e documentação. O histórico inclui o commit inicial do repositório, sem sobrescrita ou force push. Os hashes concretos são apresentados no relatório final da conversa e no `git log`.
+Commits enviados: `67813d7` (arquitetura), `17f383c` (portfólio bilíngue), `4299643` (testes e CI) e `22187cb` (documentação), seguidos do ajuste final de formatação e registro de validação. O histórico inicial foi preservado, sem force push. Consulte `git log --oneline` para os hashes completos.
 
 ## 9. GitHub
 
-Repositório exclusivo: https://github.com/DanielKulique/Portfolio, branch main. A autenticação e permissão de escrita foram verificadas. O estado do push e da execução de CI será confirmado no relatório final da conversa; esta descrição não presume sucesso de uma operação ainda não concluída.
+Repositório exclusivo: https://github.com/DanielKulique/Portfolio, branch main. Push concluído em main. O [workflow de validação](https://github.com/DanielKulique/Portfolio/actions/runs/44936116866) aprovou instalação, tipos Astro/Vue, lint, build, links e a suíte Playwright, com artefatos de interface preservados. O checkout original e o histórico foram mantidos.
 
 ## 10. Publicação
 
