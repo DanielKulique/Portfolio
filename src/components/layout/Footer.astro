@@ -1,0 +1,19 @@
+---
+/** Shared footer with the sole authorized repository destination. */
+import { CodeXml, GitFork } from '@lucide/astro';
+import { copy, type Locale } from '../../i18n';
+const { locale } = Astro.props as { locale: Locale };
+const t = copy[locale];
+---
+
+<footer class="site-footer shell">
+  <a href={locale === 'en' ? '/en/' : '/'} class="brand">
+    <CodeXml size={20} aria-hidden="true" />
+    DK<span class="accent">.</span>
+  </a>
+  <p>{t.footer}</p>
+  <a class="footer-source" href="https://github.com/DanielKulique/Portfolio">
+    <GitFork size={17} aria-hidden="true" />
+    {t.source}
+  </a>
+</footer>

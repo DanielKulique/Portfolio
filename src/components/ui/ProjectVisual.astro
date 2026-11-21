@@ -1,0 +1,73 @@
+---
+/** Code-native conceptual illustrations; these are not screenshots of running applications. */
+interface Props {
+  kind: string;
+  label: string;
+}
+const { kind, label } = Astro.props;
+---
+
+<div class:list={['project-visual', kind]} aria-hidden="true">
+  <span class="visual-caption">{label}</span>
+  {kind === 'network' ? (
+    <div class="network-sketch">
+      <span>client</span>
+      <i></i>
+      <strong>
+        {'{ }'}
+        <small>TCP / JSON</small>
+      </strong>
+      <i></i>
+      <span>database</span>
+    </div>
+  ) : kind === 'pipeline' ? (
+    <div class="pipeline-sketch">
+      <span>.pdf</span>
+      <b>· · ·</b>
+      <span>.csv</span>
+      <b>· · ·</b>
+      <span>{'{api}'}</span>
+    </div>
+  ) : kind === 'arena' ? (
+    <svg viewBox="0 0 400 170">
+      <g fill="currentColor">
+        <path d="m198 53 22 55-22-12-22 12z" />
+        <circle cx="70" cy="55" r="5" />
+        <circle cx="320" cy="125" r="8" />
+        <circle cx="292" cy="42" r="4" />
+      </g>
+      <g stroke="currentColor" fill="none">
+        <ellipse cx="200" cy="86" rx="150" ry="54" />
+        <ellipse cx="200" cy="86" rx="100" ry="34" />
+        <path d="M200 15v18m0 100v18M30 85h18m304 0h18" />
+      </g>
+    </svg>
+  ) : kind === 'maze' ? (
+    <svg viewBox="0 0 400 170">
+      <g stroke="currentColor" stroke-width="9" fill="none">
+        <path d="M93 28h210v112H93V28m0 42h65v70m-20-112v21m49-21v70h62V70h54m-96 28v42m52-28v28m0-91h44" />
+      </g>
+      <circle cx="117" cy="112" r="7" fill="var(--accent)" />
+      <circle cx="281" cy="92" r="5" fill="var(--accent)" />
+    </svg>
+  ) : (
+    <svg viewBox="0 0 400 170">
+      <g stroke="currentColor" fill="none">
+        <path d="m200 20 107 57-37 70H130L93 77zM200 20l70 127M200 20l-70 127M93 77h214m-214 0 177 70M307 77l-177 70" />
+      </g>
+      <g fill="var(--surface)" stroke="currentColor" stroke-width="3">
+        <circle cx="200" cy="20" r="9" />
+        <circle cx="307" cy="77" r="9" />
+        <circle cx="270" cy="147" r="9" />
+        <circle cx="130" cy="147" r="9" />
+        <circle cx="93" cy="77" r="9" />
+      </g>
+      <path
+        d="m200 20 107 57-37 70H130L93 77z"
+        stroke="var(--accent)"
+        stroke-width="3"
+        fill="none"
+      />
+    </svg>
+  )}
+</div>

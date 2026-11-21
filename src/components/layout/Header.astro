@@ -1,0 +1,110 @@
+---
+/** Shared accessible navigation, language pairing and persisted theme control. */
+import { Menu, Sun, Moon, CodeXml } from '@lucide/astro';
+import { copy, home, type Locale } from '../../i18n';
+interface Props {
+  locale: Locale;
+  alternate: string;
+}
+const { locale, alternate } = Astro.props;
+const t = copy[locale];
+const links = [
+  ['projects', t.projects],
+  ['about', t.about],
+  ['stack', t.stack],
+  ['research', t.research],
+];
+---
+
+<header class="site-header">
+  <div class="shell header-inner">
+    <a
+      class="brand"
+      href={home(locale)}
+      aria-label={`danielkulique. — ${locale === 'en' ? 'Home' : 'Início'}`}
+    >
+      <CodeXml size={24} aria-hidden="true" />
+      <span>
+        daniel<span class="brand-muted">kulique</span>
+        <span class="accent">.</span>
+      </span>
+    </a>
+    <nav
+      id="navigation"
+      aria-label={locale === 'en' ? 'Main navigation' : 'Navegação principal'}
+    >
+      {links.map(([id, label]) => (
+        <a href={`${home(locale)}#${id}`}>{label}</a>
+      ))}
+      <a class="nav-contact" href={`${home(locale)}#contact`}>
+        {t.contact}
+      </a>
+    </nav>
+    <div class="header-actions">
+      <a
+        class="language"
+        href={alternate}
+        lang={locale === 'en' ? 'pt-BR' : 'en'}
+        aria-label={`${locale === 'en' ? 'PT' : 'EN'} — ${t.language}`}
+      >
+        {locale === 'en' ? 'PT' : 'EN'}
+      </a>
+      <span class="action-divider" aria-hidden="true"></span>
+      <button
+        class="icon-button theme-toggle"
+        aria-label={t.theme}
+        title={t.theme}
+      >
+        <Sun class="sun" size={19} aria-hidden="true" />
+        <Moon class="moon" size={19} aria-hidden="true" />
+      </button>
+      <button
+        class="icon-button mobile-toggle"
+        aria-label={t.menu}
+        aria-expanded="false"
+        aria-controls="navigation"
+      >
+        <Menu size={22} aria-hidden="true" />
+      </button>
+    </div>
+  </div>
+</header>
+<script>
+  const toggle = document.querySelector<HTMLButtonElement>('.mobile-toggle');
+  const nav = document.querySelector<HTMLElement>('#navigation');
+  function closeMenu() {
+    toggle?.setAttribute('aria-expanded', 'false');
+    nav?.classList.remove('open');
+  }
+  toggle?.addEventListener('click', () => {
+    const expanded = toggle.getAttribute('aria-expanded') === 'true';
+    toggle.setAttribute('aria-expanded', String(!expanded));
+    nav?.classList.toggle('open', !expanded);
+  });
+  nav
+    ?.querySelectorAll('a')
+    .forEach((link) => link.addEventListener('click', closeMenu));
+  document.addEventListener('keydown', (event) => {
+    if (
+      event.key === 'Escape' &&
+      toggle?.getAttribute('aria-expanded') === 'true'
+    ) {
+      closeMenu();
+      toggle.focus();
+    }
+  });
+  document.querySelector('.theme-toggle')?.addEventListener('click', () => {
+    const next =
+      document.documentElement.dataset.theme === 'light' ? 'dark' : 'light';
+    document.documentElement.dataset.theme = next;
+    try {
+      localStorage.setItem('theme', next);
+    } catch {
+      /* Storage may be disabled; the current page still works. */
+    }
+  });
+  const alternate = document.querySelector<HTMLAnchorElement>('.language');
+  alternate?.addEventListener('click', () => {
+    if (window.location.hash) alternate.hash = window.location.hash;
+  });
+</script>

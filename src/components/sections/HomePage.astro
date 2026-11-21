@@ -1,0 +1,28 @@
+---
+/** Composes identical translated home routes without duplicate page templates. */
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Hero from './Hero.astro';
+import Projects from './Projects.astro';
+import ProfileSections from './ProfileSections.astro';
+import { home, type Locale } from '../../i18n';
+const { locale } = Astro.props as { locale: Locale };
+---
+
+<BaseLayout
+  locale={locale}
+  alternate={home(locale === 'en' ? 'pt-BR' : 'en')}
+  title={
+    locale === 'en'
+      ? 'Daniel Kulique — Software, systems & applied AI'
+      : 'Daniel Kulique — Software, sistemas e IA aplicada'
+  }
+  description={
+    locale === 'en'
+      ? 'Computer Science student at UTFPR. Explore back-end, distributed systems, data processing and game development projects with public evidence.'
+      : 'Estudante de Ciência da Computação na UTFPR. Explore projetos de back-end, sistemas distribuídos, dados e jogos com evidências públicas.'
+  }
+>
+  <Hero locale={locale} />
+  <Projects locale={locale} />
+  <ProfileSections locale={locale} />
+</BaseLayout>

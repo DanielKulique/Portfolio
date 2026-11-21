@@ -1,0 +1,45 @@
+{
+  "slug": "mips-imagens",
+  "draft": true,
+  "order": 99,
+  "categories": ["systems"],
+  "technologies": ["Assembly MIPS"],
+  "visual": "research",
+  "sources": [],
+  "content": {
+    "pt-BR": {
+      "title": "Processamento de imagens em MIPS",
+      "summary": "O repositório indicado é ACO em C++; a fonte correta para MIPS está pendente.",
+      "context": "Pendente de confirmação.",
+      "status": "Rascunho — não publicar",
+      "problem": "Pendente de confirmação.",
+      "objective": "Pendente de confirmação.",
+      "contribution": "Pendente de confirmação.",
+      "solution": "Pendente de confirmação.",
+      "architecture": "Pendente de confirmação.",
+      "decisions": "Pendente de confirmação.",
+      "challenges": "Pendente de confirmação.",
+      "tests": "Pendente de confirmação.",
+      "results": "Pendente de confirmação.",
+      "limitations": "Pendente de confirmação.",
+      "learnings": "Pendente de confirmação."
+    },
+    "en": {
+      "title": "Pending confirmation.",
+      "summary": "Pending confirmation.",
+      "context": "Pending confirmation.",
+      "status": "Pending confirmation.",
+      "problem": "Pending confirmation.",
+      "objective": "Pending confirmation.",
+      "contribution": "Pending confirmation.",
+      "solution": "Pending confirmation.",
+      "architecture": "Pending confirmation.",
+      "decisions": "Pending confirmation.",
+      "challenges": "Pending confirmation.",
+      "tests": "Pending confirmation.",
+      "results": "Pending confirmation.",
+      "limitations": "Pending confirmation.",
+      "learnings": "Pending confirmation."
+    }
+  }
+}

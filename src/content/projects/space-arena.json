@@ -1,0 +1,50 @@
+{
+  "slug": "space-arena",
+  "draft": false,
+  "order": 2,
+  "categories": ["games", "systems", "research"],
+  "technologies": ["C++", "SFML", "CMake"],
+  "visual": "arena",
+  "sources": [
+    {
+      "label": "ProjetoJogoFinal",
+      "url": "https://github.com/DanielKulique/ProjetoJogoFinal/tree/67b25ca69bcff95e5f8b2a7d81bf7c5b7ecb23f3"
+    }
+  ],
+  "content": {
+    "pt-BR": {
+      "title": "Regras que criam um universo.",
+      "summary": "Arena 2D com combate, progressão procedural, persistência e simulação para explorar balanceamento.",
+      "context": "Projeto acadêmico · Desenvolvimento de Jogos",
+      "status": "Implementação pública",
+      "problem": "Coordenar movimento, combate, progressão e persistência sem acoplar todas as regras à janela gráfica.",
+      "objective": "Construir uma arena espacial e permitir a investigação reproduzível de configurações do jogo.",
+      "contribution": "Desenvolvimento acadêmico no meu repositório público. As fontes descrevem a implementação, mas não estabelecem uma divisão completa das contribuições individuais; não é atribuída autoria exclusiva.",
+      "solution": "Game concentra as regras, Player compõe Weapon e DungeonVisualizer mantém apresentação e loop. O projeto inclui cenários, melhorias, salvamento e simulador sem interface.",
+      "architecture": "Entrada → loop de atualização → Game → entidades e regras → apresentação SFML. Configurações e sementes alimentam o simulador separado.",
+      "decisions": "Regras e renderização têm responsabilidades distintas; sementes e parâmetros explícitos apoiam reprodução de experimentos.",
+      "challenges": "Preservar o estado de uma partida, coordenar colisões e progressão e comparar configurações sem confundir indicadores de agentes com experiência humana.",
+      "tests": "CMake/CTest, testes de regras e smoke tests gráficos são documentados no repositório. Esta revisão inspecionou código e documentação, sem reexecutar essas suítes.",
+      "results": "Interfaces de estado e atualização estão em Game.hpp; documentação pública descreve persistência, cenários e protocolo experimental. Nenhum ganho de desempenho ou de experiência humana é afirmado aqui.",
+      "limitations": "Os resultados do simulador não comprovam Flow nem substituem testes com pessoas. A apresentação usa formas simples e não inclui rede nesta etapa.",
+      "learnings": "Separar simulação e apresentação permite testar regras e discutir os limites de avaliações automatizadas."
+    },
+    "en": {
+      "title": "Rules that create a universe.",
+      "summary": "A 2D arena with combat, procedural progression, persistence and simulation for balancing exploration.",
+      "context": "Academic project · Game development",
+      "status": "Public implementation",
+      "problem": "Coordinate movement, combat, progression and persistence without coupling every rule to the graphical window.",
+      "objective": "Build a space arena and support reproducible investigation of game configurations.",
+      "contribution": "Academic development in my public repository. The available sources describe the implementation, but do not establish a complete individual contribution breakdown; no exclusive authorship is claimed.",
+      "solution": "Game centralizes rules, Player composes Weapon and DungeonVisualizer owns presentation and the loop. The project includes scenarios, upgrades, saving and a headless simulator.",
+      "architecture": "Input → update loop → Game → entities and rules → SFML presentation. Explicit settings and seeds feed a separate simulator.",
+      "decisions": "Rules and rendering have distinct responsibilities; explicit seeds and parameters support experiment reproduction.",
+      "challenges": "Preserving game state, coordinating collisions and progression, and comparing configurations without equating agent indicators with human experience.",
+      "tests": "CMake/CTest, rule tests and graphical smoke tests are documented. This review inspected code and documentation without rerunning those suites.",
+      "results": "Game.hpp exposes state and update interfaces; public documentation describes persistence, scenarios and the experimental protocol. No performance or human-experience improvement is claimed here.",
+      "limitations": "Simulator outcomes do not demonstrate Flow or replace human testing. Presentation uses simple shapes and does not include networking at this stage.",
+      "learnings": "Separating simulation and presentation supports rule testing and makes the limits of automated evaluation explicit."
+    }
+  }
+}

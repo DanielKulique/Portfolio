@@ -1,0 +1,50 @@
+---
+/** Concise introduction paired with an explanatory, functional system explorer. */
+import { GitFork, Braces, Terminal, GraduationCap } from '@lucide/astro';
+import SystemDiagram from '../interactive/SystemDiagram.vue';
+import { copy, type Locale } from '../../i18n';
+import { profile } from '../../data/profile';
+const { locale } = Astro.props as { locale: Locale };
+const t = copy[locale];
+---
+
+<section class="hero shell" aria-labelledby="hero-title">
+  <div class="hero-intro">
+    <p class="eyebrow">
+      <span class="short-line"></span>
+      {t.eyebrow}
+    </p>
+    <p class="hero-name">Daniel Kulique</p>
+    <h1 id="hero-title">
+      {t.heroStart}
+      <br />
+      <span>{t.heroEnd}</span>
+    </h1>
+    <p class="hero-description">{t.intro}</p>
+    <div class="hero-actions">
+      <a href="#projects" class="button primary">
+        <Braces size={19} aria-hidden="true" />
+        {t.explore}
+      </a>
+      <a href={profile.github} class="text-link">
+        <GitFork size={19} aria-hidden="true" />
+        {t.github}
+      </a>
+    </div>
+  </div>
+  <div class="hero-system">
+    <div class="hero-system-title">
+      <Terminal size={17} aria-hidden="true" />
+      <span>{t.diagramSubtitle}</span>
+    </div>
+    <SystemDiagram locale={locale} client:load />
+    <p class="diagram-disclaimer">{t.diagramNote}</p>
+  </div>
+  <div class="hero-bottom">
+    <p class="mono">{t.focus}</p>
+    <span>
+      <GraduationCap size={18} aria-hidden="true" />
+      UTFPR · Ponta Grossa
+    </span>
+  </div>
+</section>

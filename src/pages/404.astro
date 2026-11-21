@@ -1,0 +1,28 @@
+---
+// A static hosting fallback with useful recovery links in both supported languages.
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+  locale="pt-BR"
+  title="Página não encontrada — Daniel Kulique"
+  description="Este endereço não existe. Explore os projetos de Daniel Kulique."
+  alternate="/en/"
+  noindex
+>
+  <section class="shell error-page">
+    <p class="eyebrow">404 / ROUTE NOT FOUND</p>
+    <h1>
+      Esta rota ainda
+      <br />
+      não existe.
+    </h1>
+    <p>O endereço pode ter mudado. Os projetos continuam por aqui.</p>
+    <a class="button primary" href="/">
+      Voltar ao início
+    </a>
+    <a class="text-link" href="/en/" lang="en">
+      Return to the English homepage
+    </a>
+  </section>
+</BaseLayout>

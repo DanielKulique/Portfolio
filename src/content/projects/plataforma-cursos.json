@@ -1,0 +1,45 @@
+{
+  "slug": "plataforma-cursos",
+  "draft": true,
+  "order": 99,
+  "categories": ["backend", "ai"],
+  "technologies": ["Node.js", "Express", "MySQL"],
+  "visual": "research",
+  "sources": [],
+  "content": {
+    "pt-BR": {
+      "title": "Plataforma de cursos",
+      "summary": "Sistema educacional e motor de IA privados; autorização de divulgação pendente.",
+      "context": "Pendente de confirmação.",
+      "status": "Rascunho — não publicar",
+      "problem": "Pendente de confirmação.",
+      "objective": "Pendente de confirmação.",
+      "contribution": "Pendente de confirmação.",
+      "solution": "Pendente de confirmação.",
+      "architecture": "Pendente de confirmação.",
+      "decisions": "Pendente de confirmação.",
+      "challenges": "Pendente de confirmação.",
+      "tests": "Pendente de confirmação.",
+      "results": "Pendente de confirmação.",
+      "limitations": "Pendente de confirmação.",
+      "learnings": "Pendente de confirmação."
+    },
+    "en": {
+      "title": "Pending confirmation.",
+      "summary": "Pending confirmation.",
+      "context": "Pending confirmation.",
+      "status": "Pending confirmation.",
+      "problem": "Pending confirmation.",
+      "objective": "Pending confirmation.",
+      "contribution": "Pending confirmation.",
+      "solution": "Pending confirmation.",
+      "architecture": "Pending confirmation.",
+      "decisions": "Pending confirmation.",
+      "challenges": "Pending confirmation.",
+      "tests": "Pending confirmation.",
+      "results": "Pending confirmation.",
+      "limitations": "Pending confirmation.",
+      "learnings": "Pending confirmation."
+    }
+  }
+}

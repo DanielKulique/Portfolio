@@ -1,0 +1,119 @@
+---
+/** Academic background, evidence-linked capabilities, research context and verified contact. */
+import {
+  GraduationCap,
+  FlaskConical,
+  GitFork,
+  Layers,
+  CodeXml,
+  Database,
+  Cpu,
+  Server,
+  Wrench,
+} from '@lucide/astro';
+import { copy, projectPath, type Locale } from '../../i18n';
+import { profile } from '../../data/profile';
+import { technologyGroups, reportedKnowledge } from '../../data/technologies';
+const { locale } = Astro.props as { locale: Locale };
+const t = copy[locale];
+const icons = [CodeXml, Server, Database, Cpu, Layers, Wrench];
+---
+
+<section class="section about-section" id="about" aria-labelledby="about-title">
+  <div class="shell about-grid">
+    <div>
+      <p class="eyebrow">{t.about.toUpperCase()}</p>
+      <h2 id="about-title" class="multiline">
+        {t.aboutTitle}
+      </h2>
+      <p class="about-copy">{t.aboutText}</p>
+      <p class="about-copy">{t.aboutMore}</p>
+    </div>
+    <div class="about-notes">
+      <article>
+        <GraduationCap size={24} aria-hidden="true" />
+        <p class="mono">{t.academic}</p>
+        <h3>{t.degree}</h3>
+        <p>
+          {profile.education}
+          <br />
+          Campus {profile.campus}
+        </p>
+      </article>
+      <article>
+        <FlaskConical size={24} aria-hidden="true" />
+        <p class="mono">{t.interests}</p>
+        <p>{t.interestText}</p>
+      </article>
+    </div>
+  </div>
+</section>
+<section class="section shell" id="stack" aria-labelledby="stack-title">
+  <div class="section-heading">
+    <div>
+      <p class="eyebrow">STACK &amp; TOOLKIT</p>
+      <h2 id="stack-title">{t.stackTitle}</h2>
+    </div>
+    <p class="section-description">{t.stackIntro}</p>
+  </div>
+  <div class="tech-grid">
+    {technologyGroups.map((group, index) => {
+      const Icon = icons[index]!;
+      return (
+        <article class="tech-card">
+          <Icon size={21} aria-hidden="true" />
+          <h3>{group.title[locale]}</h3>
+          <p>{group.items.join(' · ')}</p>
+          <a href={projectPath(group.projects[0], locale)}>
+            {t.evidence}
+            <span class="sr-only">: {group.title[locale]}</span>
+          </a>
+        </article>
+      );
+    })}
+  </div>
+  <div class="knowledge">
+    <p class="mono">{t.academicKnowledge}</p>
+    <p>{reportedKnowledge.join(' · ')}</p>
+    <p class="knowledge-note">
+      {locale === 'en'
+        ? 'NLP, embeddings and FAISS are areas of continued study; their detailed research case is awaiting verification.'
+        : 'NLP, embeddings e FAISS são áreas de estudo contínuo; o estudo de pesquisa detalhado aguarda verificação.'}
+    </p>
+  </div>
+</section>
+<section class="section shell" id="research" aria-labelledby="research-title">
+  <div class="research-panel">
+    <div class="research-symbol" aria-hidden="true">
+      <FlaskConical size={48} />
+      <span class="mono">
+        NLP · EMBEDDINGS
+        <br />
+        VECTOR SEARCH
+      </span>
+    </div>
+    <div>
+      <p class="eyebrow">{t.research.toUpperCase()} &amp; UTFPR</p>
+      <h2 id="research-title">{t.researchTitle}</h2>
+      <p>{t.researchText}</p>
+      <p class="research-note">{t.researchNote}</p>
+    </div>
+  </div>
+</section>
+<section class="section shell" id="contact" aria-labelledby="contact-title">
+  <div class="contact-panel">
+    <div>
+      <p class="eyebrow">{t.contact.toUpperCase()}</p>
+      <h2 id="contact-title" class="multiline">
+        {t.contactTitle}
+      </h2>
+    </div>
+    <div>
+      <p>{t.contactText}</p>
+      <a class="button primary" href={profile.github}>
+        <GitFork size={19} aria-hidden="true" />
+        {t.contactAction}
+      </a>
+    </div>
+  </div>
+</section>

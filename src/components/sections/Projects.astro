@@ -1,0 +1,110 @@
+---
+/** Collection-driven project grid; filters progressively enhance the complete static listing. */
+import { getCollection } from 'astro:content';
+import { FolderGit2, FileCode } from '@lucide/astro';
+import ProjectVisual from '../ui/ProjectVisual.astro';
+import { copy, categories, projectPath, type Locale } from '../../i18n';
+const { locale } = Astro.props as { locale: Locale };
+const t = copy[locale];
+const projects = (
+  await getCollection('projects', ({ data }) => !data.draft)
+).sort((a, b) => a.data.order - b.data.order);
+---
+
+<section class="section shell" id="projects" aria-labelledby="projects-title">
+  <div class="section-heading">
+    <div>
+      <p class="eyebrow">{t.selected}</p>
+      <h2 id="projects-title">{t.selectedTitle}</h2>
+    </div>
+    <p class="section-description">{t.selectedIntro}</p>
+  </div>
+  <div class="filter-bar" hidden>
+    <div class="filters" role="group" aria-label={t.filters}>
+      <button data-filter="all" aria-pressed="true">
+        {t.all}
+        <span>{projects.length}</span>
+      </button>
+      {categories.map((category) => (
+        <button data-filter={category} aria-pressed="false">
+          {t.category[category]}
+        </button>
+      ))}
+    </div>
+    <p class="filter-count mono" role="status" aria-live="polite">
+      <span id="result-count">{projects.length}</span> {t.results}
+    </p>
+  </div>
+  <div class="project-grid">
+    {projects.map(({ data: p }) => (
+      <article
+        class:list={['project-card', { 'featured-project': p.order === 0 }]}
+        data-categories={p.categories.join(' ')}
+      >
+        <ProjectVisual kind={p.visual} label={t.sketch} />
+        <div class="project-body">
+          <div class="project-meta mono">
+            <span>
+              <FolderGit2 size={14} aria-hidden="true" />
+              {t.category[p.categories[0]!]}
+            </span>
+            <span>{t.verified}</span>
+          </div>
+          <h3>
+            <a href={projectPath(p.slug, locale)}>{p.content[locale].title}</a>
+          </h3>
+          <p>{p.content[locale].summary}</p>
+          <ul class="tags" aria-label={t.technologies}>
+            {p.technologies.slice(0, 4).map((tech) => (
+              <li>{tech}</li>
+            ))}
+          </ul>
+          <div class="card-bottom">
+            <span class="mono">
+              {p.content[locale].context.split(' · ')[0]}
+            </span>
+            <a
+              href={projectPath(p.slug, locale)}
+              class="study-link"
+              aria-label={`${t.read}: ${p.content[locale].title}`}
+            >
+              <FileCode size={16} aria-hidden="true" />
+              {t.read}
+            </a>
+          </div>
+        </div>
+      </article>
+    ))}
+  </div>
+  <p class="filter-empty" hidden>
+    {t.empty}
+  </p>
+</section>
+<script>
+  const bar = document.querySelector<HTMLElement>('.filter-bar');
+  const cards = Array.from(
+    document.querySelectorAll<HTMLElement>('.project-card'),
+  );
+  const buttons = document.querySelectorAll<HTMLButtonElement>('[data-filter]');
+  if (bar) bar.hidden = false;
+  buttons.forEach((button) =>
+    button.addEventListener('click', () => {
+      const category = button.dataset.filter;
+      buttons.forEach((item) =>
+        item.setAttribute('aria-pressed', String(item === button)),
+      );
+      let count = 0;
+      cards.forEach((card) => {
+        const visible =
+          category === 'all' ||
+          card.dataset.categories?.split(' ').includes(category ?? '');
+        card.hidden = !visible;
+        if (visible) count++;
+      });
+      const status = document.querySelector('#result-count');
+      if (status) status.textContent = String(count);
+      const empty = document.querySelector<HTMLElement>('.filter-empty');
+      if (empty) empty.hidden = count !== 0;
+    }),
+  );
+</script>
