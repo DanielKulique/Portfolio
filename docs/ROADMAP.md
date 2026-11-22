@@ -11,7 +11,7 @@
 | 02.5 Design e acessibilidade       | Tracking, contraste, impressão, hidratação e seis larguras                                     | Concluída                       |
 | 02.6 Engineering Lab               | A* completo, oráculo BFS e grade editável por teclado                                          | Concluída                       |
 | 02.7 I18n, SEO e desempenho        | Interface/lab traduzidos, JSON-LD factual, OG por idioma, 404 inglês e CSP                     | Concluída                       |
-| 02.8 Auditoria, documentação e Git | Todos os gates, comparação antes/depois, commits semânticos e push                             | Em andamento                    |
+| 02.8 Auditoria, documentação e Git | Todos os gates, comparação antes/depois, commits semânticos e push                             | Concluída                       |
 
 Os estados refletem os gates executados e registrados em docs/VALIDATION.md. Dados pessoais ausentes não bloqueiam as etapas independentes.
 

@@ -129,4 +129,8 @@ A revisão de segurança foi focada em fonte, exposição de dados, dependência
 
 Sem deployment confirmado, não há URL de produção ou medição de compressão/CDN em campo. A configuração Astro/Cloudflare foi preservada. E-mail, currículo, datas e detalhes de projetos privados dependem de dados/autorização do proprietário; continuam documentados e não geram ações quebradas.
 
-O estado do versionamento e do GitHub Actions será registrado junto da entrega. O workflow inclui os gates locais e preserva os artefatos de interface por 14 dias.
+## GitHub Actions e versionamento
+
+Push normal concluído para `DanielKulique/Portfolio`, branch `main`, sem force push. O commit `1acb8665e4c3a74a583165a26e0a0012e2a690e2`, que reúne a implementação e documentação, passou no [workflow 45057881535](https://github.com/DanielKulique/Portfolio/actions/runs/45057881535), execução 3. Logs confirmam quatro testes de algoritmo, 18 páginas, 584 referências internas, 16 entradas no sitemap e **72 testes de navegador aprovados (1,9min)** no runner Ubuntu. Instalação, tipos, lint, formatação e build também foram aprovados. O workflow preserva os artefatos de interface por 14 dias.
+
+O fechamento posterior altera somente documentação para registrar esse resultado e concluir o roadmap. O origin existente e o histórico foram preservados. A aplicação também foi iniciada para análise manual em `http://localhost:4321`; home, inglês e laboratório retornaram HTTP 200.

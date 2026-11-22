@@ -59,8 +59,11 @@ Commits semânticos no repositório existente:
 - `421a5db` — identidade profissional, contatos autorizados, design e SEO.
 - `731f66d` — laboratório A* bilíngue e acessível.
 - `e193028` — algoritmo, seis larguras, acessibilidade e CSP de produção.
+- `1acb866` — documentação, capturas antes/depois e resultados reais.
 
-A documentação e as capturas acompanham a implementação. O envio usa push normal para `main`, preservando o origin e o histórico; a confirmação do CI será registrada após o primeiro envio.
+Push normal concluído para `main` em `DanielKulique/Portfolio`, sem force push, preservando origin e histórico. O [GitHub Actions 45057881535](https://github.com/DanielKulique/Portfolio/actions/runs/45057881535) aprovou todos os gates no commit `1acb866`, incluindo quatro testes do algoritmo e 72 testes de navegador. O commit posterior de fechamento registra essa confirmação e conclui o roadmap, sem alterar a implementação validada.
+
+Servidor local iniciado para análise manual em `http://localhost:4321`, com homes e laboratório nos dois idiomas respondendo HTTP 200. A publicação Cloudflare continua preparada; não foi solicitada uma nova conexão/deploy nesta etapa.
 
 ## 13. Pendências do proprietário
 
