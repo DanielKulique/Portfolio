@@ -36,6 +36,9 @@ const links = [
       {links.map(([id, label]) => (
         <a href={`${home(locale)}#${id}`}>{label}</a>
       ))}
+      <a href={`${home(locale)}lab/`}>
+        {locale === 'en' ? 'Lab' : 'Laboratório'}
+      </a>
       <a class="nav-contact" href={`${home(locale)}#contact`}>
         {t.contact}
       </a>

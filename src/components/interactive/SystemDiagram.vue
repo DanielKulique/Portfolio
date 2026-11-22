@@ -1,9 +1,13 @@
 <script setup lang="ts">
 /** A keyboard-accessible layer explorer grounded in the public Java reservation architecture. */
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
 import type { Locale } from '../../i18n';
 const props = defineProps<{ locale: Locale }>();
 const active = ref(0);
+const hydrated = ref(false);
+onMounted(() => {
+  hydrated.value = true;
+});
 const labels =
   props.locale === 'en'
     ? ['Client', 'Transport', 'Domain', 'Persistence']
@@ -22,7 +26,12 @@ const details =
         'Serviços de usuários, salas e reservas validam regras de domínio antes de encaminhar alterações ao repositório.',
         'Transações JDBC e uma linha de controle bloqueada protegem a consistência no MySQL/MariaDB. Essa escolha pode limitar a concorrência.',
       ];
-const tech = ['Swing / console', 'TCP + JSON', 'Java services', 'MySQL / JDBC'];
+const tech = [
+  'Swing / console',
+  'TCP + JSON',
+  props.locale === 'en' ? 'Java services' : 'Serviços Java',
+  'MySQL / JDBC',
+];
 </script>
 <template>
   <div class="system-diagram">
@@ -46,6 +55,7 @@ const tech = ['Swing / console', 'TCP + JSON', 'Java services', 'MySQL / JDBC'];
         :key="label"
         :class="{ selected: active === index }"
         :aria-pressed="active === index"
+        :disabled="!hydrated"
         aria-controls="layer-detail"
         @click="active = index"
       >

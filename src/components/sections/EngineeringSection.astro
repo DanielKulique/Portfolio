@@ -1,0 +1,43 @@
+---
+/** Links to a complete experiment and preserves the reservation layer explorer below project discovery. */
+import SystemDiagram from '../interactive/SystemDiagram.vue';
+import { home, copy, type Locale } from '../../i18n';
+const { locale } = Astro.props as { locale: Locale };
+const en = locale === 'en';
+---
+
+<section
+  class="section shell engineering-section"
+  id="engineering"
+  aria-labelledby="engineering-title"
+>
+  <div class="engineering-grid">
+    <div>
+      <p class="eyebrow">
+        {en ? 'ENGINEERING LAB' : 'LABORATÓRIO DE ENGENHARIA'}
+      </p>
+      <h2 id="engineering-title">
+        {en
+          ? 'Explore the decisions. Change the result.'
+          : 'Explore as decisões. Mude o resultado.'}
+      </h2>
+      <p>
+        {en
+          ? 'Build obstacles, choose endpoints and follow A* finding a shortest path. An independent local experiment, with visible search steps and real calculation metrics.'
+          : 'Crie obstáculos, escolha os pontos e acompanhe o A* encontrando um caminho mínimo. Um experimento local independente, com passos de busca visíveis e métricas reais do cálculo.'}
+      </p>
+      <a class="button primary" href={`${home(locale)}lab/`}>
+        {en ? 'Open A* laboratory' : 'Abrir laboratório A*'}
+      </a>
+    </div>
+    <details class="architecture-details">
+      <summary>
+        {en
+          ? 'Explore the reservation architecture'
+          : 'Explorar a arquitetura de reservas'}
+      </summary>
+      <p>{copy[locale].diagramNote}</p>
+      <SystemDiagram locale={locale} client:visible />
+    </details>
+  </div>
+</section>

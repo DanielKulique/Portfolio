@@ -1,0 +1,47 @@
+---
+/** Static experiment explanation with one interactive island; unpublished experiments have no routes or cards. */
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PathfindingLab from './PathfindingLab.vue';
+import { home, type Locale } from '../../i18n';
+import { labCopy } from '../../i18n/lab';
+const { locale } = Astro.props as { locale: Locale };
+const t = labCopy[locale];
+---
+
+<BaseLayout
+  locale={locale}
+  title={`${t.title} — Daniel Kulique`}
+  description={t.description}
+  alternate={`${home(locale === 'en' ? 'pt-BR' : 'en')}lab/`}
+>
+  <section class="shell lab-page">
+    <a class="text-link" href={home(locale)}>
+      {t.back}
+    </a>
+    <p class="eyebrow">{t.title}</p>
+    <h1>{t.name}</h1>
+    <p class="case-lead">{t.description}</p>
+    <p class="lab-note">{t.note}</p>
+    <PathfindingLab locale={locale} client:load />
+    <noscript>
+      <p>
+        {locale === 'en'
+          ? 'Enable JavaScript to edit and run the local experiment. The algorithm explanation below remains available.'
+          : 'Ative o JavaScript para editar e executar o experimento local. A explicação do algoritmo permanece disponível abaixo.'}
+      </p>
+    </noscript>
+    <div class="lab-explanation">
+      <h2>{t.technique}</h2>
+      <p>{t.explanation}</p>
+      <p>{t.tradeoff}</p>
+      <h2>{t.validation}</h2>
+      <p>{t.validationText}</p>
+      <a
+        class="text-link"
+        href="https://github.com/DanielKulique/DesenvolvimentoDeJogos/blob/5715de37b7649dfaa61de62dde0522e167b08630/source/AStar.cpp"
+      >
+        {t.source}
+      </a>
+    </div>
+  </section>
+</BaseLayout>
