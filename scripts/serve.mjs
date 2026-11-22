@@ -26,6 +26,7 @@ const mime = {
   '.woff2': 'font/woff2',
   '.xml': 'application/xml',
   '.txt': 'text/plain',
+  '.pdf': 'application/pdf',
 };
 createServer(async (req, res) => {
   try {
@@ -44,13 +45,20 @@ createServer(async (req, res) => {
       if ((await stat(file)).isDirectory()) file += '/index.html';
       await stat(file);
     } catch {
-      file = root + '/404.html';
+      file =
+        root +
+        (new URL(req.url, 'http://localhost').pathname.startsWith('/en/')
+          ? '/en/404.html'
+          : '/404.html');
       code = 404;
     }
     const data = await readFile(file);
     res.writeHead(code, {
       ...headers,
       'Content-Type': mime[extname(file)] || 'application/octet-stream',
+      ...(file.includes('/_astro/')
+        ? { 'Cache-Control': 'public, max-age=31536000, immutable' }
+        : {}),
     });
     res.end(data);
   } catch {

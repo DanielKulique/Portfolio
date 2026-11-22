@@ -1,5 +1,5 @@
 /** Hash only generated inline code; Cloudflare enforces the same policy exercised by browser tests. */
-import { readdir, readFile, writeFile } from 'node:fs/promises';
+import { readdir, readFile, writeFile, rename, rmdir } from 'node:fs/promises';
 import { createHash } from 'node:crypto';
 import { join } from 'node:path';
 const scripts = new Set();
@@ -27,6 +27,9 @@ async function walk(dir) {
     }
   }
 }
+// Astro emits nested 404 routes as directories; Pages expects a sibling 404.html.
+await rename('dist/en/404/index.html', 'dist/en/404.html');
+await rmdir('dist/en/404');
 await walk('dist');
 const policy = `default-src 'self'; script-src 'self' ${[...scripts].join(' ')}; style-src 'self' ${[...styles].join(' ')}; img-src 'self' data:; font-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'self'; frame-ancestors 'none'; form-action 'none'`;
 await writeFile(

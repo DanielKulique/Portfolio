@@ -11,6 +11,8 @@ try {
   for (const path of [
     '/',
     '/en/',
+    '/lab/',
+    '/en/lab/',
     '/projects/sistemas-distribuidos/',
     '/projects/otimizacao-colonia-formigas/',
   ]) {
