@@ -13,13 +13,13 @@
   ],
   "content": {
     "pt-BR": {
-      "title": "Dos documentos à consulta.",
+      "title": "Pipeline de Dados e API — ANS",
       "summary": "Extração de PDFs da ANS, transformação em CSV, consultas SQL e busca de operadoras com FastAPI.",
       "context": "Avaliação técnica · Processamento de dados",
       "status": "Implementação pública",
       "problem": "Documentos e arquivos tabulares de saúde suplementar exigem etapas distintas de extração, transformação e consulta.",
       "objective": "Organizar essas etapas e disponibilizar uma interface de busca sobre dados de operadoras.",
-      "contribution": "Desenvolvimento acadêmico no meu repositório público. As fontes descrevem a implementação, mas não estabelecem uma divisão completa das contribuições individuais; não é atribuída autoria exclusiva.",
+      "contribution": "Projeto realizado como avaliação técnica: organização de extração, transformação, consultas SQL e interface de busca.",
       "solution": "Scripts de scraping e Tabula/Pandas processam documentos. SQL define tabelas e importações. FastAPI lê um CSV e oferece busca consumida por uma interface Vue.",
       "architecture": "PDF → Tabula/Pandas → CSV. Em trilhas separadas: importação MySQL para análise SQL e CSV de operadoras → FastAPI → Vue.",
       "decisions": "A API consulta um DataFrame em memória; o MySQL integra a etapa de análise e não é a fonte direta da API. A extração fixa páginas e nomes de colunas.",
@@ -27,16 +27,23 @@
       "tests": "Há uma coleção Postman no repositório. Não foram identificadas evidências suficientes de uma suíte automatizada abrangente; a execução do pipeline não foi realizada nesta revisão.",
       "results": "Os arquivos públicos comprovam transformação de PDF em CSV, schema relacional, endpoints GET/POST /buscar e estrutura Vue.",
       "limitations": "Os scripts usam caminhos e formatos específicos. A busca limita resultados e possui tratamento de exceções amplo; exige revisão antes de uso público. O portfólio não hospeda os dados originais.",
-      "learnings": "Uma API de consulta e uma etapa de análise SQL podem compartilhar um domínio sem compor uma integração direta entre si."
+      "learnings": "Uma API de consulta e uma etapa de análise SQL podem compartilhar um domínio sem compor uma integração direta entre si.",
+      "subtitle": "Dos documentos à consulta.",
+      "overview": "Extração de PDFs da ANS, transformação em CSV, consultas SQL e busca de operadoras com FastAPI. Organizar essas etapas e disponibilizar uma interface de busca sobre dados de operadoras.",
+      "execution": {
+        "requirements": "Python, dependências de requirements.txt, Java para Tabula e Node.js para a interface Vue.",
+        "commands": "python -m venv .venv\n. .venv/bin/activate\npip install -r requirements.txt\ncd api\nuvicorn main:app --reload\n# Em outro terminal, a partir da raiz do repositório\ncd api/frontend\nnpm ci\nnpm run dev",
+        "note": "Execute os comandos em uma cópia do repositório, após instalar os pré-requisitos. Consulte o README fixado nas fontes para configuração de dados, sistema operacional e dependências. Nunca publique suas credenciais locais."
+      }
     },
     "en": {
-      "title": "From documents to queries.",
+      "title": "ANS Data Pipeline and API",
       "summary": "ANS PDF extraction, CSV transformation, SQL queries and an operator search API built with FastAPI.",
       "context": "Technical assessment · Data processing",
       "status": "Public implementation",
       "problem": "Supplementary healthcare documents and tables require distinct extraction, transformation and query stages.",
       "objective": "Organize these stages and provide a search interface over operator data.",
-      "contribution": "Academic development in my public repository. The available sources describe the implementation, but do not establish a complete individual contribution breakdown; no exclusive authorship is claimed.",
+      "contribution": "Technical assessment project covering extraction, transformation, SQL queries and a search interface.",
       "solution": "Scraping scripts and Tabula/Pandas process documents. SQL defines tables and imports. FastAPI reads a CSV and exposes search consumed by a Vue interface.",
       "architecture": "PDF → Tabula/Pandas → CSV. Separate paths: MySQL imports for SQL analysis, and operator CSV → FastAPI → Vue.",
       "decisions": "The API queries an in-memory DataFrame; MySQL supports analysis and is not the API’s direct data source. Extraction uses fixed pages and column names.",
@@ -44,7 +51,24 @@
       "tests": "A Postman collection is available. Sufficient evidence of a comprehensive automated suite was not found; the pipeline was not executed during this review.",
       "results": "Public files demonstrate PDF-to-CSV transformation, a relational schema, GET/POST /buscar endpoints and a Vue application structure.",
       "limitations": "Scripts depend on specific paths and formats. Search caps results and uses broad exception handling; it needs review before public operation. This portfolio does not host original datasets.",
-      "learnings": "A query API and a SQL analysis stage may share a domain without forming a direct database-to-API integration."
+      "learnings": "A query API and a SQL analysis stage may share a domain without forming a direct database-to-API integration.",
+      "subtitle": "From documents to queries.",
+      "overview": "ANS PDF extraction, CSV transformation, SQL queries and an operator search API built with FastAPI. Organize these stages and provide a search interface over operator data.",
+      "execution": {
+        "requirements": "Python, requirements.txt dependencies, Java for Tabula and Node.js for the Vue interface.",
+        "commands": "python -m venv .venv\n. .venv/bin/activate\npip install -r requirements.txt\ncd api\nuvicorn main:app --reload\n# In another terminal, from the repository root\ncd api/frontend\nnpm ci\nnpm run dev",
+        "note": "Run these commands in a repository checkout after installing prerequisites. Consult the pinned README for data setup, operating-system details and dependencies. Never publish local credentials."
+      }
+    }
+  },
+  "repository": "https://github.com/DanielKulique/teste_nivelamento",
+  "evidence": {
+    "kind": "source",
+    "source": "https://github.com/DanielKulique/teste_nivelamento/blob/7a5ea092025eebff367c199f7f0f0be7ac7ceb7d/api/main.py",
+    "snippet": "@app.get(\"/buscar\")\nasync def buscar(termo: str):\n    return buscar_operadora(termo)",
+    "caption": {
+      "pt-BR": "Evidência de código · endpoint real da API FastAPI",
+      "en": "Code evidence · actual FastAPI endpoint"
     }
   }
 }

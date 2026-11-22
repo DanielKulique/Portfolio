@@ -1,7 +1,7 @@
 {
   "slug": "otimizacao-colonia-formigas",
   "draft": false,
-  "order": 4,
+  "order": 3,
   "categories": ["ai", "systems"],
   "technologies": ["C++", "raylib", "ACO"],
   "visual": "graph",
@@ -13,38 +13,62 @@
   ],
   "content": {
     "pt-BR": {
-      "title": "Caminhos que emergem.",
+      "title": "Otimização por Colônia de Formigas — TSP",
       "summary": "Otimização por colônia de formigas para o caixeiro viajante, com visualização interativa em raylib.",
       "context": "Projeto acadêmico · Algoritmos de otimização",
       "status": "Implementação pública",
       "problem": "Explorar a construção de rotas em um grafo ponderado por meio de uma meta-heurística inspirada em formigas.",
       "objective": "Visualizar escolhas probabilísticas, atualização de feromônios e evolução das rotas.",
-      "contribution": "Desenvolvimento acadêmico no meu repositório público. As fontes descrevem a implementação, mas não estabelecem uma divisão completa das contribuições individuais; não é atribuída autoria exclusiva.",
+      "contribution": "Trabalho de desenvolvimento e estudo no contexto acadêmico deste projeto. As responsabilidades técnicas apresentadas correspondem ao código do repositório; materiais didáticos e recursos de terceiros mantêm suas atribuições originais.",
       "solution": "Graph representa pesos, Ant acompanha visitas, ACO calcula escolhas e atualizações e Visualizer exibe as etapas em raylib.",
       "architecture": "Grafo ponderado → colônia de agentes → escolha probabilística → evaporação e depósito → melhor rota observada → visualização.",
       "decisions": "Classes distintas separam o estado do grafo, o agente, a otimização e a apresentação. Os controles permitem pausar e avançar por etapas.",
       "challenges": "Combinar heurística de distância e feromônio, tratar transições inválidas e tornar o estado do algoritmo visível.",
       "tests": "Não foi identificada uma suíte automatizada na árvore pública inspecionada. A documentação fornece instruções de compilação e controles para exploração manual.",
       "results": "ACO.cpp contém cálculo heurístico e probabilístico; README e screenshot público demonstram a proposta de visualização. O algoritmo não garante uma solução ótima.",
-      "limitations": "Não há benchmark independente nesta revisão. Este repositório não contém a implementação MIPS inicialmente mencionada no briefing.",
-      "learnings": "Uma visualização por etapas ajuda a investigar o comportamento de uma meta-heurística sem transformar uma solução observada em garantia de ótimo."
+      "limitations": "A meta-heurística não garante o ótimo global. Sem avaliação comparativa com solvers exatos ou benchmark independente, a visualização serve à exploração do algoritmo.",
+      "learnings": "Uma visualização por etapas ajuda a investigar o comportamento de uma meta-heurística sem transformar uma solução observada em garantia de ótimo.",
+      "subtitle": "Caminhos que emergem.",
+      "overview": "Otimização por colônia de formigas para o caixeiro viajante, com visualização interativa em raylib. Visualizar escolhas probabilísticas, atualização de feromônios e evolução das rotas.",
+      "execution": {
+        "requirements": "C++17, Make, raylib 6.x e bibliotecas gráficas locais.",
+        "commands": "make\n./main",
+        "note": "Execute os comandos em uma cópia do repositório, após instalar os pré-requisitos. Consulte o README fixado nas fontes para configuração de dados, sistema operacional e dependências. Nunca publique suas credenciais locais."
+      }
     },
     "en": {
-      "title": "Paths that emerge.",
+      "title": "Ant Colony Optimization — TSP",
       "summary": "Ant colony optimization for the traveling salesman problem, with an interactive raylib visualization.",
       "context": "Academic project · Optimization algorithms",
       "status": "Public implementation",
       "problem": "Explore route construction in a weighted graph using an ant-inspired metaheuristic.",
       "objective": "Visualize probabilistic choices, pheromone updates and route evolution.",
-      "contribution": "Academic development in my public repository. The available sources describe the implementation, but do not establish a complete individual contribution breakdown; no exclusive authorship is claimed.",
+      "contribution": "Development and study within this academic project. The technical responsibilities described correspond to the repository code; teaching material and third-party assets retain their original attribution.",
       "solution": "Graph represents weights, Ant tracks visits, ACO computes choices and updates, and Visualizer displays the stages with raylib.",
       "architecture": "Weighted graph → agent colony → probabilistic selection → evaporation and deposit → best observed route → visualization.",
       "decisions": "Separate classes model graph state, agents, optimization and presentation. Controls support pausing and stepping through the algorithm.",
       "challenges": "Combining distance heuristics and pheromones, handling invalid transitions and making algorithm state visible.",
       "tests": "No automated test suite was identified in the inspected public tree. Documentation provides build instructions and controls for manual exploration.",
       "results": "ACO.cpp implements heuristic and probability calculations; the README and public screenshot demonstrate the visualization concept. The algorithm does not guarantee an optimal solution.",
-      "limitations": "This review includes no independent benchmark. This repository does not contain the MIPS implementation initially mentioned in the brief.",
-      "learnings": "Step-by-step visualization supports metaheuristic investigation without turning an observed solution into an optimality guarantee."
+      "limitations": "The metaheuristic does not guarantee a global optimum. Without comparison to exact solvers or an independent benchmark, the visualization supports algorithm exploration.",
+      "learnings": "Step-by-step visualization supports metaheuristic investigation without turning an observed solution into an optimality guarantee.",
+      "subtitle": "Paths that emerge.",
+      "overview": "Ant colony optimization for the traveling salesman problem, with an interactive raylib visualization. Visualize probabilistic choices, pheromone updates and route evolution.",
+      "execution": {
+        "requirements": "C++17, Make, raylib 6.x and local graphics libraries.",
+        "commands": "make\n./main",
+        "note": "Run these commands in a repository checkout after installing prerequisites. Consult the pinned README for data setup, operating-system details and dependencies. Never publish local credentials."
+      }
+    }
+  },
+  "repository": "https://github.com/DanielKulique/ACO-PROJECT",
+  "evidence": {
+    "kind": "screenshot",
+    "source": "https://github.com/DanielKulique/ACO-PROJECT/blob/4cbe32826318d27734695d7631cab99cf614470c/screenshot000.png",
+    "image": "aco",
+    "caption": {
+      "pt-BR": "Captura original do repositório · aplicação raylib",
+      "en": "Original repository screenshot · raylib application"
     }
   }
 }

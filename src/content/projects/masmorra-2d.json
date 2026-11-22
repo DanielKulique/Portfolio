@@ -1,7 +1,7 @@
 {
   "slug": "masmorra-2d",
   "draft": false,
-  "order": 3,
+  "order": 5,
   "categories": ["games"],
   "technologies": ["C++", "SFML", "A*", "Make"],
   "visual": "maze",
@@ -13,38 +13,62 @@
   ],
   "content": {
     "pt-BR": {
-      "title": "Fundamentos em movimento.",
+      "title": "Dungeon 2D — Sistemas e Mecânicas",
       "summary": "Masmorra 2D para estudar entidades, colisões, coleta, NPCs e atualização em passo fixo.",
       "context": "Projeto acadêmico · Desenvolvimento de Jogos",
       "status": "Implementação pública",
       "problem": "Integrar um exemplo didático a regras consistentes de movimento, colisão e estado de jogo.",
       "objective": "Explorar programação orientada a objetos e fundamentos de sistemas de jogos em C++.",
-      "contribution": "Desenvolvimento acadêmico no meu repositório público. As fontes descrevem a implementação, mas não estabelecem uma divisão completa das contribuições individuais; não é atribuída autoria exclusiva.",
+      "contribution": "Trabalho de desenvolvimento e estudo no contexto acadêmico deste projeto. As responsabilidades técnicas apresentadas correspondem ao código do repositório; materiais didáticos e recursos de terceiros mantêm suas atribuições originais.",
       "solution": "TileMap lê o mapa CSV; Game coordena jogador, moedas, inimigos e escudos; DungeonVisualizer recebe entradas e desenha o estado.",
       "architecture": "Main → TileMap + Game → NPC/Entity → RigidBody2D e Collision2D → apresentação SFML.",
       "decisions": "Passo fixo de atualização, coordenadas em pixels e responsabilidade explícita para física, mapa e apresentação.",
       "challenges": "Conciliar contratos de classes do material didático, evitar atravessar paredes e impedir pontuação repetida após coleta.",
-      "tests": "O README descreve testes de A*, BehaviorTree, regras e smoke test. O perseguidor do jogo usa direção direta; a existência de A* não implica uso no personagem.",
+      "tests": "A suíte pública de A* foi compilada e executada em uma cópia isolada do commit indicado: 539/539 verificações aprovadas, incluindo comparação com BFS em grades pequenas. A validação não executou os testes gráficos.",
       "results": "O repositório disponibiliza classes, testes e documentação de movimento, coleta, dano, escudo e reinício.",
       "limitations": "Parte dos recursos e exemplos tem origem no material do professor, identificada no README. Não se reivindica autoria desses recursos. O perseguidor pode parar diante de barreiras.",
-      "learnings": "Contratos de coordenadas e tempo importam tanto quanto a hierarquia de classes para manter uma simulação consistente."
+      "learnings": "Contratos de coordenadas e tempo importam tanto quanto a hierarquia de classes para manter uma simulação consistente.",
+      "subtitle": "Fundamentos em movimento.",
+      "overview": "Masmorra 2D para estudar entidades, colisões, coleta, NPCs e atualização em passo fixo. Explorar programação orientada a objetos e fundamentos de sistemas de jogos em C++.",
+      "execution": {
+        "requirements": "C++17, Make e SFML 2.x; display gráfico para executar o jogo.",
+        "commands": "make -j2\nmake test-astar\n./build/jogo",
+        "note": "Execute os comandos em uma cópia do repositório, após instalar os pré-requisitos. Consulte o README fixado nas fontes para configuração de dados, sistema operacional e dependências. Nunca publique suas credenciais locais."
+      }
     },
     "en": {
-      "title": "Fundamentals in motion.",
+      "title": "Dungeon 2D — Systems and Mechanics",
       "summary": "A 2D dungeon for studying entities, collisions, collectibles, NPCs and fixed-step updates.",
       "context": "Academic project · Game development",
       "status": "Public implementation",
       "problem": "Integrate a teaching example with consistent movement, collision and game-state rules.",
       "objective": "Explore object-oriented programming and game-system fundamentals in C++.",
-      "contribution": "Academic development in my public repository. The available sources describe the implementation, but do not establish a complete individual contribution breakdown; no exclusive authorship is claimed.",
+      "contribution": "Development and study within this academic project. The technical responsibilities described correspond to the repository code; teaching material and third-party assets retain their original attribution.",
       "solution": "TileMap reads CSV maps; Game coordinates the player, coins, enemies and shields; DungeonVisualizer receives input and draws the state.",
       "architecture": "Main → TileMap + Game → NPC/Entity → RigidBody2D and Collision2D → SFML presentation.",
       "decisions": "Fixed-step updates, pixel coordinates and explicit responsibilities for physics, maps and presentation.",
       "challenges": "Reconciling teaching-material class contracts, preventing wall penetration and avoiding repeated points after collection.",
-      "tests": "The README describes A*, BehaviorTree, rule tests and a smoke test. The game pursuer uses direct steering; the presence of A* does not imply its use by that character.",
+      "tests": "The public A* suite was compiled and run in a sandboxed copy of the pinned commit: 539/539 checks passed, including BFS comparisons on small grids. Graphical tests were not executed.",
       "results": "The repository provides classes, tests and documentation for movement, collection, damage, shields and restarting.",
       "limitations": "Some assets and examples originate in the instructor’s material, as identified in the README. No authorship of those assets is claimed. The pursuer can stop at barriers.",
-      "learnings": "Coordinate and timing contracts matter as much as class hierarchies for maintaining a consistent simulation."
+      "learnings": "Coordinate and timing contracts matter as much as class hierarchies for maintaining a consistent simulation.",
+      "subtitle": "Fundamentals in motion.",
+      "overview": "A 2D dungeon for studying entities, collisions, collectibles, NPCs and fixed-step updates. Explore object-oriented programming and game-system fundamentals in C++.",
+      "execution": {
+        "requirements": "C++17, Make and SFML 2.x; a graphical display to run the game.",
+        "commands": "make -j2\nmake test-astar\n./build/jogo",
+        "note": "Run these commands in a repository checkout after installing prerequisites. Consult the pinned README for data setup, operating-system details and dependencies. Never publish local credentials."
+      }
+    }
+  },
+  "repository": "https://github.com/DanielKulique/DesenvolvimentoDeJogos",
+  "evidence": {
+    "kind": "test-output",
+    "source": "https://github.com/DanielKulique/DesenvolvimentoDeJogos/blob/5715de37b7649dfaa61de62dde0522e167b08630/source/teste_astar.cpp",
+    "snippet": "Caminho encontrado (8 passos):\n#######\n#S**#D#\n#.#*#*#\n#.#***#\n#######\n539/539 verificacoes A* aprovadas.",
+    "caption": {
+      "pt-BR": "Saída de teste real · A* em ambiente isolado; mapa abreviado",
+      "en": "Actual test output · sandboxed A*; abbreviated map"
     }
   }
 }

@@ -1,0 +1,74 @@
+{
+  "slug": "modelagem-sistema-educacional",
+  "draft": false,
+  "order": 2,
+  "categories": ["systems"],
+  "technologies": ["UML", "PlantUML"],
+  "visual": "network",
+  "repository": "https://github.com/DanielKulique/trabalhoApoo",
+  "sources": [
+    {
+      "label": "Modelos UML e decisões de domínio",
+      "url": "https://github.com/DanielKulique/trabalhoApoo/tree/e323109589b3e90928e94923fce95f9a6b210e73"
+    }
+  ],
+  "content": {
+    "pt-BR": {
+      "title": "Modelagem de Sistema Educacional",
+      "subtitle": "Do domínio às responsabilidades.",
+      "summary": "Modelagem UML em camadas, casos de uso e protótipos para um sistema gamificado de atividades educacionais.",
+      "overview": "Projeto de análise e projeto orientados a objetos. Os artefatos representam regras, papéis e interações antes da implementação de um produto.",
+      "context": "Projeto acadêmico · Análise e Projeto Orientados a Objetos",
+      "status": "Modelos e protótipos públicos",
+      "problem": "Distinguir grupos de alunos, atividades e avaliações, mantendo coerência entre regras de negócio, casos de uso e interfaces.",
+      "objective": "Explicitar responsabilidades e relações do domínio para orientar uma implementação futura.",
+      "contribution": "Trabalho acadêmico de modelagem de sistemas. Os artefatos públicos apresentados incluem diagramas UML, decisões de domínio e protótipos; não é atribuída autoria exclusiva dos materiais.",
+      "solution": "Diagramas de classes, sequência, estados, atividades e casos de uso descrevem os fluxos de professores, alunos, responsáveis e pedagogos.",
+      "architecture": "Separação de modelos de negócio e apresentação, com controladores para coordenar os casos de uso. Turma e Atividade são entidades diferentes com relação muitos-para-muitos.",
+      "decisions": "Separar Turma de Atividade evita vincular a identidade do grupo a uma tarefa específica. Turno, ano letivo e capacidade pertencem à turma; uma atividade pode envolver várias turmas.",
+      "challenges": "Manter as multiplicidades, as regras de capacidade e os protótipos alinhados ao mesmo modelo de domínio.",
+      "tests": "A evidência disponível é documental: revisão de coerência entre diagramas, casos de uso e telas. Não há aplicação executável ou suíte de integração comprovada neste estudo.",
+      "results": "Repositório com modelos PlantUML, justificativa da relação Turma–Atividade e protótipos por perfil. A imagem exibida é um protótipo original, não uma tela de sistema implementado.",
+      "limitations": "Os modelos não comprovam a implementação de autenticação, IA, envio de e-mail ou persistência. Essas responsabilidades são representadas no projeto, sem operação em produção demonstrada.",
+      "learnings": "Uma decisão de domínio precisa se refletir nas relações entre entidades, nos casos de uso e nas telas para evitar contratos contraditórios.",
+      "execution": {
+        "requirements": "Editor Markdown e renderizador PlantUML; Java para renderização local.",
+        "commands": "git clone https://github.com/DanielKulique/trabalhoApoo.git\ncd trabalhoApoo\n# Abrir diagramas/Visao_de_Projeto/Classe/diagrama_de_classes.md\n# Renderizar os blocos com um plugin PlantUML local.",
+        "note": "Este repositório contém modelos e protótipos. Não inicia um serviço web ou backend."
+      }
+    },
+    "en": {
+      "title": "Educational System Modeling",
+      "subtitle": "From domain to responsibilities.",
+      "summary": "Layered UML models, use cases and prototypes for a gamified educational activity system.",
+      "overview": "An object-oriented analysis and design project. Artifacts represent rules, roles and interactions before a product implementation.",
+      "context": "Academic project · Object-Oriented Analysis and Design",
+      "status": "Public models and prototypes",
+      "problem": "Distinguish student groups, activities and assessments while keeping domain rules, use cases and interfaces consistent.",
+      "objective": "Make responsibilities and domain relationships explicit to guide a future implementation.",
+      "contribution": "Academic system-modeling work. The public artifacts shown include UML diagrams, domain decisions and prototypes; no exclusive authorship is claimed.",
+      "solution": "Class, sequence, state, activity and use-case diagrams describe interactions among teachers, students, guardians and pedagogues.",
+      "architecture": "Business and presentation models have separate responsibilities, with controllers coordinating use cases. ClassGroup and Activity are distinct entities in a many-to-many relationship.",
+      "decisions": "Separating ClassGroup from Activity avoids tying group identity to a specific task. Shift, academic year and capacity belong to a group; one activity can involve multiple groups.",
+      "challenges": "Keep multiplicities, capacity rules and prototypes aligned with the same domain model.",
+      "tests": "Available evidence is documentary: consistency review across diagrams, use cases and screens. This study demonstrates no executable product or integration suite.",
+      "results": "A repository of PlantUML models, the ClassGroup–Activity decision rationale and role-specific prototypes. The displayed image is an original prototype, not a running application screenshot.",
+      "limitations": "Models do not establish implemented authentication, AI, email delivery or persistence. Those responsibilities are modeled without demonstrated production operation.",
+      "learnings": "A domain decision must be reflected in entity relationships, use cases and interfaces to avoid contradictory contracts.",
+      "execution": {
+        "requirements": "Markdown editor and PlantUML renderer; Java for local rendering.",
+        "commands": "git clone https://github.com/DanielKulique/trabalhoApoo.git\ncd trabalhoApoo\n# Open diagramas/Visao_de_Projeto/Classe/diagrama_de_classes.md\n# Render blocks with a local PlantUML plugin.",
+        "note": "This repository contains models and prototypes. It does not start a web service or backend."
+      }
+    }
+  },
+  "evidence": {
+    "kind": "prototype",
+    "source": "https://github.com/DanielKulique/trabalhoApoo/blob/e323109589b3e90928e94923fce95f9a6b210e73/diagramas/telas/novas_telas/telas_professor/08_professor_cadastrar_atividade.png",
+    "image": "apoo",
+    "caption": {
+      "pt-BR": "Protótipo original público · cadastro de atividade; não é aplicação executável",
+      "en": "Original public prototype · activity registration; not an executable application"
+    }
+  }
+}

@@ -3,12 +3,16 @@
 import { getCollection } from 'astro:content';
 import { FolderGit2, FileCode } from '@lucide/astro';
 import ProjectVisual from '../ui/ProjectVisual.astro';
+import ProjectEvidence from '../ui/ProjectEvidence.astro';
 import { copy, categories, projectPath, type Locale } from '../../i18n';
 const { locale } = Astro.props as { locale: Locale };
 const t = copy[locale];
 const projects = (
   await getCollection('projects', ({ data }) => !data.draft)
 ).sort((a, b) => a.data.order - b.data.order);
+const publishedCategories = categories.filter((category) =>
+  projects.some((project) => project.data.categories.includes(category)),
+);
 ---
 
 <section class="section shell" id="projects" aria-labelledby="projects-title">
@@ -25,7 +29,7 @@ const projects = (
         {t.all}
         <span>{projects.length}</span>
       </button>
-      {categories.map((category) => (
+      {publishedCategories.map((category) => (
         <button data-filter={category} aria-pressed="false">
           {t.category[category]}
         </button>
@@ -41,19 +45,30 @@ const projects = (
         class:list={['project-card', { 'featured-project': p.order === 0 }]}
         data-categories={p.categories.join(' ')}
       >
-        <ProjectVisual kind={p.visual} label={t.sketch} />
+        {p.evidence ? (
+          <ProjectEvidence evidence={p.evidence} locale={locale} preview />
+        ) : (
+          <ProjectVisual kind={p.visual} label={t.sketch} />
+        )}
         <div class="project-body">
           <div class="project-meta mono">
             <span>
               <FolderGit2 size={14} aria-hidden="true" />
               {t.category[p.categories[0]!]}
             </span>
-            <span>{t.verified}</span>
+            <span>{p.content[locale].status}</span>
           </div>
           <h3>
             <a href={projectPath(p.slug, locale)}>{p.content[locale].title}</a>
           </h3>
+          {p.content[locale].subtitle && (
+            <p class="project-subtitle">{p.content[locale].subtitle}</p>
+          )}
           <p>{p.content[locale].summary}</p>
+          <p class="project-contribution">
+            <strong>{locale === 'en' ? 'Contribution: ' : 'Atuação: '}</strong>
+            {p.content[locale].contribution.split('. ')[0]}.
+          </p>
           <ul class="tags" aria-label={t.technologies}>
             {p.technologies.slice(0, 4).map((tech) => (
               <li>{tech}</li>
@@ -71,6 +86,20 @@ const projects = (
               <FileCode size={16} aria-hidden="true" />
               {t.read}
             </a>
+            {p.repository && (
+              <a class="study-link" href={p.repository}>
+                {t.repo}
+                <span class="sr-only">: {p.content[locale].title}</span>
+              </a>
+            )}
+            {p.slug === 'masmorra-2d' && (
+              <a
+                class="study-link"
+                href={`${locale === 'en' ? '/en/' : '/'}lab/`}
+              >
+                {locale === 'en' ? 'Try A*' : 'Experimentar A*'}
+              </a>
+            )}
           </div>
         </div>
       </article>

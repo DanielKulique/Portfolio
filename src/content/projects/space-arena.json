@@ -1,7 +1,7 @@
 {
   "slug": "space-arena",
   "draft": false,
-  "order": 2,
+  "order": 4,
   "categories": ["games", "systems", "research"],
   "technologies": ["C++", "SFML", "CMake"],
   "visual": "arena",
@@ -13,38 +13,62 @@
   ],
   "content": {
     "pt-BR": {
-      "title": "Regras que criam um universo.",
+      "title": "Jogo 2D com Geração Procedural",
       "summary": "Arena 2D com combate, progressão procedural, persistência e simulação para explorar balanceamento.",
       "context": "Projeto acadêmico · Desenvolvimento de Jogos",
       "status": "Implementação pública",
       "problem": "Coordenar movimento, combate, progressão e persistência sem acoplar todas as regras à janela gráfica.",
       "objective": "Construir uma arena espacial e permitir a investigação reproduzível de configurações do jogo.",
-      "contribution": "Desenvolvimento acadêmico no meu repositório público. As fontes descrevem a implementação, mas não estabelecem uma divisão completa das contribuições individuais; não é atribuída autoria exclusiva.",
+      "contribution": "Trabalho de desenvolvimento e estudo no contexto acadêmico deste projeto. As responsabilidades técnicas apresentadas correspondem ao código do repositório; materiais didáticos e recursos de terceiros mantêm suas atribuições originais.",
       "solution": "Game concentra as regras, Player compõe Weapon e DungeonVisualizer mantém apresentação e loop. O projeto inclui cenários, melhorias, salvamento e simulador sem interface.",
       "architecture": "Entrada → loop de atualização → Game → entidades e regras → apresentação SFML. Configurações e sementes alimentam o simulador separado.",
       "decisions": "Regras e renderização têm responsabilidades distintas; sementes e parâmetros explícitos apoiam reprodução de experimentos.",
       "challenges": "Preservar o estado de uma partida, coordenar colisões e progressão e comparar configurações sem confundir indicadores de agentes com experiência humana.",
       "tests": "CMake/CTest, testes de regras e smoke tests gráficos são documentados no repositório. Esta revisão inspecionou código e documentação, sem reexecutar essas suítes.",
-      "results": "Interfaces de estado e atualização estão em Game.hpp; documentação pública descreve persistência, cenários e protocolo experimental. Nenhum ganho de desempenho ou de experiência humana é afirmado aqui.",
+      "results": "Game.hpp expõe estado, atualização e métricas da partida. O repositório inclui cenários configuráveis, persistência versionada e um protocolo de simulação com sementes explícitas.",
       "limitations": "Os resultados do simulador não comprovam Flow nem substituem testes com pessoas. A apresentação usa formas simples e não inclui rede nesta etapa.",
-      "learnings": "Separar simulação e apresentação permite testar regras e discutir os limites de avaliações automatizadas."
+      "learnings": "Separar simulação e apresentação permite testar regras e discutir os limites de avaliações automatizadas.",
+      "subtitle": "Regras que criam um universo.",
+      "overview": "Arena 2D com combate, progressão procedural, persistência e simulação para explorar balanceamento. Construir uma arena espacial e permitir a investigação reproduzível de configurações do jogo.",
+      "execution": {
+        "requirements": "C++17, CMake ≥ 3.16 e SFML 2.6.1 exata.",
+        "commands": "cmake -S . -B build -DCMAKE_BUILD_TYPE=Debug -DBUILD_TESTING=ON\ncmake --build build --parallel 2\nctest --test-dir build --output-on-failure\n./build/space_arena",
+        "note": "Execute os comandos em uma cópia do repositório, após instalar os pré-requisitos. Consulte o README fixado nas fontes para configuração de dados, sistema operacional e dependências. Nunca publique suas credenciais locais."
+      }
     },
     "en": {
-      "title": "Rules that create a universe.",
+      "title": "2D Game with Procedural Generation",
       "summary": "A 2D arena with combat, procedural progression, persistence and simulation for balancing exploration.",
       "context": "Academic project · Game development",
       "status": "Public implementation",
       "problem": "Coordinate movement, combat, progression and persistence without coupling every rule to the graphical window.",
       "objective": "Build a space arena and support reproducible investigation of game configurations.",
-      "contribution": "Academic development in my public repository. The available sources describe the implementation, but do not establish a complete individual contribution breakdown; no exclusive authorship is claimed.",
+      "contribution": "Development and study within this academic project. The technical responsibilities described correspond to the repository code; teaching material and third-party assets retain their original attribution.",
       "solution": "Game centralizes rules, Player composes Weapon and DungeonVisualizer owns presentation and the loop. The project includes scenarios, upgrades, saving and a headless simulator.",
       "architecture": "Input → update loop → Game → entities and rules → SFML presentation. Explicit settings and seeds feed a separate simulator.",
       "decisions": "Rules and rendering have distinct responsibilities; explicit seeds and parameters support experiment reproduction.",
       "challenges": "Preserving game state, coordinating collisions and progression, and comparing configurations without equating agent indicators with human experience.",
       "tests": "CMake/CTest, rule tests and graphical smoke tests are documented. This review inspected code and documentation without rerunning those suites.",
-      "results": "Game.hpp exposes state and update interfaces; public documentation describes persistence, scenarios and the experimental protocol. No performance or human-experience improvement is claimed here.",
+      "results": "Game.hpp exposes game state, updates and metrics. The repository includes configurable scenarios, versioned persistence and a simulation protocol with explicit seeds.",
       "limitations": "Simulator outcomes do not demonstrate Flow or replace human testing. Presentation uses simple shapes and does not include networking at this stage.",
-      "learnings": "Separating simulation and presentation supports rule testing and makes the limits of automated evaluation explicit."
+      "learnings": "Separating simulation and presentation supports rule testing and makes the limits of automated evaluation explicit.",
+      "subtitle": "Rules that create a universe.",
+      "overview": "A 2D arena with combat, procedural progression, persistence and simulation for balancing exploration. Build a space arena and support reproducible investigation of game configurations.",
+      "execution": {
+        "requirements": "C++17, CMake ≥ 3.16 and exact SFML 2.6.1.",
+        "commands": "cmake -S . -B build -DCMAKE_BUILD_TYPE=Debug -DBUILD_TESTING=ON\ncmake --build build --parallel 2\nctest --test-dir build --output-on-failure\n./build/space_arena",
+        "note": "Run these commands in a repository checkout after installing prerequisites. Consult the pinned README for data setup, operating-system details and dependencies. Never publish local credentials."
+      }
+    }
+  },
+  "repository": "https://github.com/DanielKulique/ProjetoJogoFinal",
+  "evidence": {
+    "kind": "source",
+    "source": "https://github.com/DanielKulique/ProjetoJogoFinal/blob/67b25ca69bcff95e5f8b2a7d81bf7c5b7ecb23f3/source/Game.hpp",
+    "snippet": "void update(float dt, const GameInput& input);\nGameState state() const noexcept;\nvoid restart();\nconst GameStats& stats() const noexcept;",
+    "caption": {
+      "pt-BR": "Evidência de código · contrato real de simulação C++",
+      "en": "Code evidence · actual C++ simulation contract"
     }
   }
 }

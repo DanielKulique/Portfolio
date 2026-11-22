@@ -1,13 +1,10 @@
 ---
-/** Complete bilingual technical study; public sources are pinned to inspected repository revisions. */
+/** Professional case structure combines domain context, implementation, evidence, execution and immutable sources. */
 import type { CollectionEntry } from 'astro:content';
-import { Image } from 'astro:assets';
-import { GitFork, FolderGit2 } from '@lucide/astro';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import SystemDiagram from '../interactive/SystemDiagram.vue';
-import ProjectVisual from '../ui/ProjectVisual.astro';
-import acoImage from '../../assets/aco-original.png';
-import { copy, projectPath, home, type Locale } from '../../i18n';
+import ProjectEvidence from '../ui/ProjectEvidence.astro';
+import { copy, home, projectPath, type Locale } from '../../i18n';
 interface Props {
   project: CollectionEntry<'projects'>;
   locale: Locale;
@@ -16,9 +13,14 @@ const {
   project: { data: p },
   locale,
 } = Astro.props;
-const c = p.content[locale];
-const t = copy[locale];
+const c = p.content[locale],
+  t = copy[locale];
 const fields = Object.keys(t.fields) as Array<keyof typeof t.fields>;
+const evidenceTitle =
+  locale === 'en'
+    ? 'Visual and technical evidence'
+    : 'Evidências visuais e técnicas';
+const runTitle = locale === 'en' ? 'How to run' : 'Como executar';
 ---
 
 <BaseLayout
@@ -29,13 +31,14 @@ const fields = Object.keys(t.fields) as Array<keyof typeof t.fields>;
 >
   <article class="case-study shell">
     <a class="text-link back-link" href={`${home(locale)}#projects`}>
-      <FolderGit2 size={18} aria-hidden="true" />
       {t.back}
     </a>
     <p class="eyebrow">
-      {t.study} · {p.categories.map((cat) => t.category[cat]).join(' / ')}
+      {t.study} ·{' '}
+      {p.categories.map((category) => t.category[category]).join(' / ')}
     </p>
     <h1>{c.title}</h1>
+    {c.subtitle && <p class="case-subtitle">{c.subtitle}</p>}
     <p class="case-lead">{c.summary}</p>
     <dl class="case-meta">
       <div>
@@ -51,15 +54,6 @@ const fields = Object.keys(t.fields) as Array<keyof typeof t.fields>;
         <dd>{p.technologies.join(' · ')}</dd>
       </div>
     </dl>
-    {p.visual === 'network' ? (
-      <div class="case-diagram">
-        <h2>{t.diagramTitle}</h2>
-        <p>{t.diagramNote}</p>
-        <SystemDiagram locale={locale} client:visible />
-      </div>
-    ) : (
-      <ProjectVisual kind={p.visual} label={t.sketch} />
-    )}
     <div class="case-content">
       <aside
         aria-label={locale === 'en' ? 'Study contents' : 'Conteúdo do estudo'}
@@ -67,45 +61,64 @@ const fields = Object.keys(t.fields) as Array<keyof typeof t.fields>;
         {fields.map((key) => (
           <a href={`#${key}`}>{t.fields[key]}</a>
         ))}
+        {p.evidence && <a href="#evidence">{evidenceTitle}</a>}
+        {c.execution && <a href="#execution">{runTitle}</a>}
       </aside>
       <div>
         {fields.map((key) => (
-          <section id={key} class="case-section">
-            <h2>{t.fields[key]}</h2>
-            <p>{c[key]}</p>
-          </section>
+          <>
+            <section id={key} class="case-section">
+              <h2>{t.fields[key]}</h2>
+              <p>{c[key]}</p>
+            </section>
+            {key === 'architecture' &&
+              p.visual === 'network' &&
+              p.slug === 'sistemas-distribuidos' && (
+                <div class="case-diagram">
+                  <h3>{t.diagramTitle}</h3>
+                  <p>{t.diagramNote}</p>
+                  <SystemDiagram locale={locale} client:visible />
+                </div>
+              )}
+            {key === 'challenges' && p.evidence && (
+              <section id="evidence" class="case-section">
+                <h2>{evidenceTitle}</h2>
+                <ProjectEvidence evidence={p.evidence} locale={locale} />
+                {p.slug === 'masmorra-2d' && (
+                  <a class="button primary" href={`${home(locale)}lab/`}>
+                    {locale === 'en'
+                      ? 'Try the independent A* demo'
+                      : 'Experimentar a demonstração independente de A*'}
+                  </a>
+                )}
+              </section>
+            )}
+          </>
         ))}
+        {c.execution && (
+          <section id="execution" class="case-section execution-steps">
+            <h2>{runTitle}</h2>
+            <p>{c.execution.requirements}</p>
+            <pre><code>{c.execution.commands}</code></pre>
+            <p>{c.execution.note}</p>
+          </section>
+        )}
       </div>
     </div>
-    {p.visual === 'graph' && (
-      <figure class="case-image">
-        <Image
-          src={acoImage}
-          alt={
-            locale === 'en'
-              ? 'Original public ACO application screenshot showing a weighted graph and algorithm controls.'
-              : 'Captura pública original da aplicação ACO com grafo ponderado e controles do algoritmo.'
-          }
-          widths={[480, 800, 1200]}
-          sizes="(max-width: 800px) 100vw, 800px"
-          format="webp"
-          loading="lazy"
-        />
-        <figcaption>
-          {locale === 'en'
-            ? 'Original screenshot from the public repository. No interactive application runs on this page.'
-            : 'Captura original do repositório público. A aplicação não é executada nesta página.'}
-        </figcaption>
-      </figure>
-    )}
     <section class="case-sources">
       <h2>{t.sources}</h2>
       {p.sources.map((source) => (
-        <a href={source.url} class="button secondary">
-          <GitFork size={18} aria-hidden="true" />
+        <a class="text-link" href={source.url}>
           {source.label}
         </a>
       ))}
+      {p.repository && (
+        <p>
+          <a class="button secondary" href={p.repository}>
+            {t.repo}
+          </a>
+        </p>
+      )}
     </section>
   </article>
 </BaseLayout>

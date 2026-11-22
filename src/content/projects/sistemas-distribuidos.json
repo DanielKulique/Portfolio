@@ -13,38 +13,62 @@
   ],
   "content": {
     "pt-BR": {
-      "title": "Reservas entre sistemas.",
+      "title": "Sistema Distribuído de Reservas",
       "summary": "Comunicação cliente-servidor, contratos JSON e persistência transacional para reservas de salas.",
       "context": "Projeto acadêmico · Sistemas distribuídos",
       "status": "Implementação pública",
       "problem": "Coordenar usuários, salas e reservas entre clientes distintos, preservando contratos de comunicação e integridade dos dados.",
       "objective": "Implementar um sistema de reservas com comunicação TCP, interface Swing e persistência relacional.",
-      "contribution": "Desenvolvimento acadêmico no meu repositório público. As fontes descrevem a implementação, mas não estabelecem uma divisão completa das contribuições individuais; não é atribuída autoria exclusiva.",
+      "contribution": "Trabalho de desenvolvimento e estudo no contexto acadêmico deste projeto. As responsabilidades técnicas apresentadas correspondem ao código do repositório; materiais didáticos e recursos de terceiros mantêm suas atribuições originais.",
       "solution": "O servidor aceita conexões TCP e processa mensagens JSON. Serviços validam as operações e o repositório JDBC executa transações em MySQL/MariaDB.",
       "architecture": "Cliente Swing/console → TCP + JSON → ServidorTcp → serviços de usuários, salas e reservas → RepositorioMySql → MySQL/MariaDB.",
       "decisions": "Uma thread atende cada conexão. O protocolo é fixado por contrato; a persistência usa prepared statements e uma linha de controle bloqueada com SELECT FOR UPDATE.",
       "challenges": "Lidar com mensagens inválidas, limites de tamanho, concorrência e sincronização entre as regras do domínio e o contrato compartilhado.",
-      "tests": "O repositório contém testes de comunicação, aplicação, persistência, GUI e roteiros manuais. A existência dessas suítes foi verificada; seus testes não foram reexecutados durante a criação do portfólio.",
+      "tests": "Em cópia isolada do commit indicado, TesteArquivo passou em 11 verificações e TesteEp1 em 214 verificações, incluindo regras, rollback, protocolo TCP/JSON e reconexão. A bateria adicional de comunicação teve uma falha de comparação de saída provocada pelo aviso das opções de JVM no processo filho; não é apresentada como totalmente aprovada.",
       "results": "Código público para cliente e servidor, schema SQL, contrato e suítes de testes. O diagrama deste estudo representa as camadas encontradas nesses arquivos.",
       "limitations": "O bloqueio global de transações favorece consistência, mas pode limitar concorrência. Não há benchmark independente ou evidência de operação em produção nesta revisão.",
-      "learnings": "Contratos explícitos e separação entre transporte, domínio e persistência tornam os pontos de falha e as responsabilidades mais claros."
+      "learnings": "Contratos explícitos e separação entre transporte, domínio e persistência tornam os pontos de falha e as responsabilidades mais claros.",
+      "subtitle": "Reservas entre sistemas.",
+      "overview": "Comunicação cliente-servidor, contratos JSON e persistência transacional para reservas de salas. Implementar um sistema de reservas com comunicação TCP, interface Swing e persistência relacional.",
+      "execution": {
+        "requirements": "JDK 17+, MySQL/MariaDB preparado com sql/schema.sql e configuração JDBC local.",
+        "commands": "./build.sh --classes-only\n./servidor.sh 5000 config/mysql.properties\n# Em outro terminal\n./cliente.sh 127.0.0.1 5000",
+        "note": "Execute os comandos em uma cópia do repositório, após instalar os pré-requisitos. Consulte o README fixado nas fontes para configuração de dados, sistema operacional e dependências. Nunca publique suas credenciais locais."
+      }
     },
     "en": {
-      "title": "Reservations across systems.",
+      "title": "Distributed Room Reservation System",
       "summary": "Client-server communication, JSON contracts and transactional persistence for room reservations.",
       "context": "Academic project · Distributed systems",
       "status": "Public implementation",
       "problem": "Coordinate users, rooms and reservations across clients while preserving communication contracts and data integrity.",
       "objective": "Implement a reservation system with TCP communication, a Swing interface and relational persistence.",
-      "contribution": "Academic development in my public repository. The available sources describe the implementation, but do not establish a complete individual contribution breakdown; no exclusive authorship is claimed.",
+      "contribution": "Development and study within this academic project. The technical responsibilities described correspond to the repository code; teaching material and third-party assets retain their original attribution.",
       "solution": "The server accepts TCP connections and processes JSON messages. Services validate operations and the JDBC repository runs transactions in MySQL/MariaDB.",
       "architecture": "Swing/console client → TCP + JSON → ServidorTcp → user, room and reservation services → RepositorioMySql → MySQL/MariaDB.",
       "decisions": "One thread serves each connection. A pinned protocol defines the contract; persistence uses prepared statements and a control row locked with SELECT FOR UPDATE.",
       "challenges": "Handling invalid messages, size limits, concurrency and alignment between domain rules and a shared contract.",
-      "tests": "The repository contains communication, application, persistence and GUI tests, plus manual scripts. Their presence was verified; these suites were not rerun while creating this portfolio.",
+      "tests": "In a sandboxed copy of the pinned commit, TesteArquivo passed 11 checks and TesteEp1 passed 214 checks, including domain rules, rollback, TCP/JSON and reconnection. An additional communication suite had one output-comparison failure caused by a JVM-option notice in a child process; it is not reported as fully passed.",
       "results": "Public client and server code, SQL schema, contract and test suites. The diagram in this study reflects the layers found in these files.",
       "limitations": "The global transaction lock favors consistency but may constrain concurrency. This review provides no independent benchmark or production-operation evidence.",
-      "learnings": "Explicit contracts and separation of transport, domain and persistence make failure points and responsibilities easier to understand."
+      "learnings": "Explicit contracts and separation of transport, domain and persistence make failure points and responsibilities easier to understand.",
+      "subtitle": "Reservations across systems.",
+      "overview": "Client-server communication, JSON contracts and transactional persistence for room reservations. Implement a reservation system with TCP communication, a Swing interface and relational persistence.",
+      "execution": {
+        "requirements": "JDK 17+, MySQL/MariaDB initialized with sql/schema.sql and local JDBC configuration.",
+        "commands": "./build.sh --classes-only\n./servidor.sh 5000 config/mysql.properties\n# In another terminal\n./cliente.sh 127.0.0.1 5000",
+        "note": "Run these commands in a repository checkout after installing prerequisites. Consult the pinned README for data setup, operating-system details and dependencies. Never publish local credentials."
+      }
+    }
+  },
+  "repository": "https://github.com/DanielKulique/sistemasDistribuidos",
+  "evidence": {
+    "kind": "source",
+    "source": "https://github.com/DanielKulique/sistemasDistribuidos/blob/cadcc334cb68d90efecc75ce554e18b73009d749/src/main/java/br/edu/utfpr/sd/ep1/RepositorioMySql.java",
+    "snippet": "c.setTransactionIsolation(Connection.TRANSACTION_READ_COMMITTED);\nc.setAutoCommit(false);\nSELECT id FROM controle_transacoes WHERE id=1 FOR UPDATE",
+    "caption": {
+      "pt-BR": "Evidência de código · persistência transacional JDBC",
+      "en": "Code evidence · JDBC transactional persistence"
     }
   }
 }

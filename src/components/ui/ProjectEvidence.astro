@@ -1,0 +1,48 @@
+---
+/** Presents original images or verbatim source/test excerpts with explicit provenance, never fabricated app screens. */
+import type { CollectionEntry } from 'astro:content';
+import { Image } from 'astro:assets';
+import aco from '../../assets/aco-original.png';
+import apoo from '../../assets/apoo-prototype.png';
+import type { Locale } from '../../i18n';
+interface Props {
+  evidence: NonNullable<CollectionEntry<'projects'>['data']['evidence']>;
+  locale: Locale;
+  preview?: boolean;
+}
+const { evidence, locale, preview = false } = Astro.props;
+const assets = { aco, apoo };
+---
+
+<figure class:list={[preview ? 'evidence-card' : 'case-image']}>
+  <div class:list={{ 'evidence-preview': preview }}>
+    {evidence.image ? (
+      <Image
+        src={assets[evidence.image]}
+        alt={evidence.caption[locale]}
+        widths={[480, 800, 1200]}
+        sizes={
+          preview
+            ? '(max-width: 800px) 100vw, 600px'
+            : '(max-width: 800px) 100vw, 900px'
+        }
+        format="webp"
+        loading="lazy"
+      />
+    ) : (
+      <pre><code>{evidence.snippet}</code></pre>
+    )}
+  </div>
+  <figcaption class:list={{ 'evidence-caption': preview }}>
+    {evidence.caption[locale]}
+    {!preview && (
+      <>
+        {' '}
+        ·{' '}
+        <a class="text-link" href={evidence.source}>
+          {locale === 'en' ? 'Open original source' : 'Abrir fonte original'}
+        </a>
+      </>
+    )}
+  </figcaption>
+</figure>
