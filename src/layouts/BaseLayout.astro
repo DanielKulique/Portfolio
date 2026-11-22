@@ -1,9 +1,11 @@
 ---
 /** Semantic document shell, local fonts and metadata; absolute URLs require a confirmed origin. */
 import '../styles/global.css';
+import '../styles/evolution.css';
 import Header from '../components/layout/Header.astro';
 import Footer from '../components/layout/Footer.astro';
-import { copy, type Locale } from '../i18n';
+import { copy, home, type Locale } from '../i18n';
+import { profile } from '../data/profile';
 interface Props {
   locale: Locale;
   title: string;
@@ -15,6 +17,35 @@ const { locale, title, description, alternate, noindex = false } = Astro.props;
 const canonical =
   Astro.site && !noindex ? new URL(Astro.url.pathname, Astro.site) : undefined;
 const other = Astro.site ? new URL(alternate, Astro.site) : alternate;
+const person = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: profile.fullName,
+  alternateName: profile.name,
+  description:
+    locale === 'en'
+      ? 'Computer Science student at UTFPR, Ponta Grossa.'
+      : 'Estudante de Ciência da Computação na UTFPR, campus Ponta Grossa.',
+  sameAs: profile.contacts
+    .filter((contact) => contact.authorized && contact.kind !== 'email')
+    .map((contact) => contact.href),
+  ...(Astro.site ? { url: new URL(home(locale), Astro.site).href } : {}),
+};
+const structured = [
+  person,
+  ...(Astro.site
+    ? [
+        {
+          '@context': 'https://schema.org',
+          '@type': 'WebSite',
+          name: 'Daniel Kulique',
+          url: Astro.site.href,
+          inLanguage: ['pt-BR', 'en'],
+        },
+      ]
+    : []),
+];
+const structuredJson = JSON.stringify(structured).replaceAll('<', '\\u003c');
 ---
 
 <!doctype html>
@@ -59,15 +90,25 @@ const other = Astro.site ? new URL(alternate, Astro.site) : alternate;
       <>
         <meta
           property="og:image"
-          content={new URL('/images/social-card.png', Astro.site)}
+          content={
+            new URL(
+              locale === 'en'
+                ? '/images/social-card.png'
+                : '/images/social-card-pt.png',
+              Astro.site,
+            )
+          }
         />
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />
         <meta
           property="og:image:alt"
-          content="Daniel Kulique — Software. Systems. Applied AI."
+          content={`Daniel Kulique — ${copy[locale].focus}`}
         />
       </>
+    )}
+    {!noindex && (
+      <script is:inline type="application/ld+json" set:html={structuredJson} />
     )}
     <script is:inline src="/theme.js"></script>
   </head>

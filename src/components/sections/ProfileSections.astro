@@ -1,22 +1,43 @@
 ---
-/** Academic background, evidence-linked capabilities, research context and verified contact. */
+/** Factual background, seven evidence-linked capability areas, research training and authorized contact actions. */
 import {
   GraduationCap,
   FlaskConical,
-  GitFork,
   Layers,
   CodeXml,
   Database,
   Cpu,
   Server,
   Wrench,
+  Monitor,
 } from '@lucide/astro';
+import { getCollection } from 'astro:content';
 import { copy, projectPath, type Locale } from '../../i18n';
 import { profile } from '../../data/profile';
-import { technologyGroups, reportedKnowledge } from '../../data/technologies';
+import { technologyGroups } from '../../data/technologies';
+import ProfessionalLinks from '../ui/ProfessionalLinks.astro';
 const { locale } = Astro.props as { locale: Locale };
-const t = copy[locale];
-const icons = [CodeXml, Server, Database, Cpu, Layers, Wrench];
+const t = copy[locale],
+  en = locale === 'en';
+const projects = await getCollection('projects', ({ data }) => !data.draft);
+const titles = new Map(
+  projects.map((p) => [p.data.slug, p.data.content[locale].title]),
+);
+const icons = [CodeXml, Server, Monitor, Database, Cpu, Layers, Wrench];
+const levels = {
+  demonstrated: en
+    ? 'Demonstrated in public artifacts'
+    : 'Demonstrado em artefatos públicos',
+  academic: en
+    ? 'Reported academic knowledge'
+    : 'Conhecimento acadêmico informado',
+  reported: en
+    ? 'Owner-reported use in a private project'
+    : 'Uso informado em projeto privado',
+  learning: en
+    ? 'Learning and research training'
+    : 'Aprendizagem e formação em pesquisa',
+};
 ---
 
 <section class="section about-section" id="about" aria-labelledby="about-title">
@@ -51,10 +72,16 @@ const icons = [CodeXml, Server, Database, Cpu, Layers, Wrench];
 <section class="section shell" id="stack" aria-labelledby="stack-title">
   <div class="section-heading">
     <div>
-      <p class="eyebrow">STACK &amp; TOOLKIT</p>
+      <p class="eyebrow">
+        {en ? 'TECHNOLOGIES & PRACTICE' : 'TECNOLOGIAS E PRÁTICA'}
+      </p>
       <h2 id="stack-title">{t.stackTitle}</h2>
     </div>
-    <p class="section-description">{t.stackIntro}</p>
+    <p class="section-description">
+      {en
+        ? 'Follow each technology to the project that demonstrates its use. Academic knowledge and ongoing study are identified separately.'
+        : 'Da tecnologia ao projeto que demonstra sua utilização. Conhecimentos acadêmicos e estudos em andamento são identificados separadamente.'}
+    </p>
   </div>
   <div class="tech-grid">
     {technologyGroups.map((group, index) => {
@@ -63,23 +90,27 @@ const icons = [CodeXml, Server, Database, Cpu, Layers, Wrench];
         <article class="tech-card">
           <Icon size={21} aria-hidden="true" />
           <h3>{group.title[locale]}</h3>
-          <p>{group.items.join(' · ')}</p>
-          <a href={projectPath(group.projects[0], locale)}>
-            {t.evidence}
-            <span class="sr-only">: {group.title[locale]}</span>
-          </a>
+          <ul class="tech-evidence">
+            {group.items.map((item) => (
+              <li>
+                <strong>{item.name}</strong>
+                {item.focus && (
+                  <span class="tech-level">{item.focus[locale]}</span>
+                )}
+                {item.level !== 'demonstrated' && (
+                  <span class="tech-level">{levels[item.level]}</span>
+                )}
+                {item.projects
+                  .filter((slug) => titles.has(slug))
+                  .map((slug) => (
+                    <a href={projectPath(slug, locale)}>{titles.get(slug)}</a>
+                  ))}
+              </li>
+            ))}
+          </ul>
         </article>
       );
     })}
-  </div>
-  <div class="knowledge">
-    <p class="mono">{t.academicKnowledge}</p>
-    <p>{reportedKnowledge.join(' · ')}</p>
-    <p class="knowledge-note">
-      {locale === 'en'
-        ? 'NLP, embeddings and FAISS are areas of continued study; their detailed research case is awaiting verification.'
-        : 'NLP, embeddings e FAISS são áreas de estudo contínuo; o estudo de pesquisa detalhado aguarda verificação.'}
-    </p>
   </div>
 </section>
 <section class="section shell" id="research" aria-labelledby="research-title">
@@ -89,14 +120,15 @@ const icons = [CodeXml, Server, Database, Cpu, Layers, Wrench];
       <span class="mono">
         NLP · EMBEDDINGS
         <br />
-        VECTOR SEARCH
+        {en ? 'VECTOR SEARCH' : 'BUSCA VETORIAL'}
       </span>
     </div>
     <div>
-      <p class="eyebrow">{t.research.toUpperCase()} &amp; UTFPR</p>
+      <p class="eyebrow">
+        {en ? 'UNDERGRADUATE RESEARCH' : 'INICIAÇÃO CIENTÍFICA'} · UTFPR
+      </p>
       <h2 id="research-title">{t.researchTitle}</h2>
       <p>{t.researchText}</p>
-      <p class="research-note">{t.researchNote}</p>
     </div>
   </div>
 </section>
@@ -109,11 +141,12 @@ const icons = [CodeXml, Server, Database, Cpu, Layers, Wrench];
       </h2>
     </div>
     <div>
-      <p>{t.contactText}</p>
-      <a class="button primary" href={profile.github}>
-        <GitFork size={19} aria-hidden="true" />
-        {t.contactAction}
-      </a>
+      <p>
+        {en
+          ? 'Open to internships and junior roles in back-end development, software engineering and applied AI. Let’s talk about systems, data and research.'
+          : 'Disponível para estágio e posições júnior em desenvolvimento back-end, engenharia de software e IA aplicada. Vamos conversar sobre sistemas, dados e pesquisa.'}
+      </p>
+      <ProfessionalLinks locale={locale} />
     </div>
   </div>
 </section>

@@ -1,11 +1,11 @@
 ---
-/** Concise introduction paired with an explanatory, functional system explorer. */
-import { GitFork, Braces, Terminal, GraduationCap } from '@lucide/astro';
-import SystemDiagram from '../interactive/SystemDiagram.vue';
-import { copy, type Locale } from '../../i18n';
-import { profile } from '../../data/profile';
+/** Recruiting-first introduction: name, specialty, availability and evidence-linked focus areas. */
+import { Braces, GraduationCap } from '@lucide/astro';
+import ProfessionalLinks from '../ui/ProfessionalLinks.astro';
+import { copy, projectPath, type Locale } from '../../i18n';
 const { locale } = Astro.props as { locale: Locale };
 const t = copy[locale];
+const en = locale === 'en';
 ---
 
 <section class="hero shell" aria-labelledby="hero-title">
@@ -14,37 +14,59 @@ const t = copy[locale];
       <span class="short-line"></span>
       {t.eyebrow}
     </p>
-    <p class="hero-name">Daniel Kulique</p>
     <h1 id="hero-title">
-      {t.heroStart}
-      <br />
-      <span>{t.heroEnd}</span>
+      Daniel Kulique<span class="accent">.</span>
     </h1>
+    <p class="hero-specialty">{t.focus}</p>
+    <p class="availability">
+      {en
+        ? 'Open to internships and junior opportunities'
+        : 'Disponível para estágio e oportunidades júnior'}
+    </p>
     <p class="hero-description">{t.intro}</p>
     <div class="hero-actions">
       <a href="#projects" class="button primary">
         <Braces size={19} aria-hidden="true" />
         {t.explore}
       </a>
-      <a href={profile.github} class="text-link">
-        <GitFork size={19} aria-hidden="true" />
-        {t.github}
-      </a>
+      <ProfessionalLinks locale={locale} />
     </div>
-  </div>
-  <div class="hero-system">
-    <div class="hero-system-title">
-      <Terminal size={17} aria-hidden="true" />
-      <span>{t.diagramSubtitle}</span>
-    </div>
-    <SystemDiagram locale={locale} client:load />
-    <p class="diagram-disclaimer">{t.diagramNote}</p>
-  </div>
-  <div class="hero-bottom">
-    <p class="mono">{t.focus}</p>
-    <span>
+    <p class="hero-education">
       <GraduationCap size={18} aria-hidden="true" />
-      UTFPR · Ponta Grossa
-    </span>
+      {en
+        ? 'Computer Science · UTFPR, Ponta Grossa'
+        : 'Ciência da Computação · UTFPR, Ponta Grossa'}
+    </p>
   </div>
+  <aside
+    class="hero-focus"
+    aria-label={en ? 'Technical focus' : 'Foco técnico'}
+  >
+    <p class="eyebrow">
+      {en ? 'FROM FUNDAMENTALS TO SYSTEMS' : 'DOS FUNDAMENTOS AOS SISTEMAS'}
+    </p>
+    <a href={projectPath('sistemas-distribuidos', locale)}>
+      <strong>
+        {en
+          ? 'Back-end & distributed systems'
+          : 'Back-end e sistemas distribuídos'}
+      </strong>
+      <span>Java · TCP/IP · MySQL</span>
+    </a>
+    <a href={projectPath('pipeline-ans', locale)}>
+      <strong>
+        {en ? 'APIs & data processing' : 'APIs e processamento de dados'}
+      </strong>
+      <span>Python · FastAPI · SQL</span>
+    </a>
+    <a href={projectPath('otimizacao-colonia-formigas', locale)}>
+      <strong>
+        {en ? 'Optimization & algorithms' : 'Otimização e algoritmos'}
+      </strong>
+      <span>C++ · ACO · A*</span>
+    </a>
+    <p class="hero-tagline">
+      {t.heroStart} {t.heroEnd}
+    </p>
+  </aside>
 </section>

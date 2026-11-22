@@ -1,0 +1,28 @@
+---
+/** One source of truth for authorized links in the hero and contact section. */
+import { GitFork, Mail, ExternalLink, FileText } from '@lucide/astro';
+import { profile } from '../../data/profile';
+import type { Locale } from '../../i18n';
+const { locale } = Astro.props as { locale: Locale };
+const icons = { github: GitFork, email: Mail, linkedin: ExternalLink };
+---
+
+<div class="professional-links">
+  {profile.resume?.authorized && (
+    <a class="button secondary resume-link" href={profile.resume.href} download>
+      <FileText size={18} aria-hidden="true" />
+      {locale === 'en' ? 'Download résumé' : 'Baixar currículo'}
+    </a>
+  )}
+  {profile.contacts
+    .filter((contact) => contact.authorized)
+    .map((contact) => {
+      const Icon = icons[contact.kind];
+      return (
+        <a class="text-link" href={contact.href}>
+          <Icon size={18} aria-hidden="true" />
+          {contact.label}
+        </a>
+      );
+    })}
+</div>
