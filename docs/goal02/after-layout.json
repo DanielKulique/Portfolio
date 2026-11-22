@@ -1,0 +1,110 @@
+[
+  {
+    "width": 360,
+    "theme": "dark",
+    "heroHeight": 590.484375,
+    "projectsTop": 663.484375,
+    "overflow": false,
+    "primaryBackground": "rgb(56, 189, 248)",
+    "h1": "Daniel Kulique."
+  },
+  {
+    "width": 360,
+    "theme": "light",
+    "heroHeight": 590.484375,
+    "projectsTop": 663.484375,
+    "overflow": false,
+    "primaryBackground": "rgb(3, 108, 156)",
+    "h1": "Daniel Kulique."
+  },
+  {
+    "width": 390,
+    "theme": "dark",
+    "heroHeight": 563.125,
+    "projectsTop": 636.125,
+    "overflow": false,
+    "primaryBackground": "rgb(56, 189, 248)",
+    "h1": "Daniel Kulique."
+  },
+  {
+    "width": 390,
+    "theme": "light",
+    "heroHeight": 563.125,
+    "projectsTop": 636.125,
+    "overflow": false,
+    "primaryBackground": "rgb(3, 108, 156)",
+    "h1": "Daniel Kulique."
+  },
+  {
+    "width": 768,
+    "theme": "dark",
+    "heroHeight": 478.765625,
+    "projectsTop": 551.765625,
+    "overflow": false,
+    "primaryBackground": "rgb(56, 189, 248)",
+    "h1": "Daniel Kulique."
+  },
+  {
+    "width": 768,
+    "theme": "light",
+    "heroHeight": 478.765625,
+    "projectsTop": 551.765625,
+    "overflow": false,
+    "primaryBackground": "rgb(3, 108, 156)",
+    "h1": "Daniel Kulique."
+  },
+  {
+    "width": 1024,
+    "theme": "dark",
+    "heroHeight": 492.15625,
+    "projectsTop": 581.15625,
+    "overflow": false,
+    "primaryBackground": "rgb(56, 189, 248)",
+    "h1": "Daniel Kulique."
+  },
+  {
+    "width": 1024,
+    "theme": "light",
+    "heroHeight": 492.15625,
+    "projectsTop": 581.15625,
+    "overflow": false,
+    "primaryBackground": "rgb(3, 108, 156)",
+    "h1": "Daniel Kulique."
+  },
+  {
+    "width": 1440,
+    "theme": "dark",
+    "heroHeight": 515.5,
+    "projectsTop": 604.5,
+    "overflow": false,
+    "primaryBackground": "rgb(56, 189, 248)",
+    "h1": "Daniel Kulique."
+  },
+  {
+    "width": 1440,
+    "theme": "light",
+    "heroHeight": 515.5,
+    "projectsTop": 604.5,
+    "overflow": false,
+    "primaryBackground": "rgb(3, 108, 156)",
+    "h1": "Daniel Kulique."
+  },
+  {
+    "width": 1920,
+    "theme": "dark",
+    "heroHeight": 515.671875,
+    "projectsTop": 604.671875,
+    "overflow": false,
+    "primaryBackground": "rgb(56, 189, 248)",
+    "h1": "Daniel Kulique."
+  },
+  {
+    "width": 1920,
+    "theme": "light",
+    "heroHeight": 515.671875,
+    "projectsTop": 604.671875,
+    "overflow": false,
+    "primaryBackground": "rgb(3, 108, 156)",
+    "h1": "Daniel Kulique."
+  }
+]

@@ -37,3 +37,7 @@ Não configure SSR, Functions ou adapter Cloudflare. A pasta dist e `_headers` s
 Use um deployment anterior confirmado no painel Pages ou reverta o commit em main e deixe a integração construir de novo. Nunca force push para reverter uma publicação.
 
 Referência: https://developers.cloudflare.com/pages/framework-guides/deploy-an-astro-site/
+
+## Fallbacks por idioma
+
+O build agora inclui 404.html e en/404.html, ambos sem canonical e fora do sitemap. A geração ajusta o caminho emitido pelo Astro antes de calcular a CSP, seguindo a [busca do Pages pelo 404 mais próximo](https://developers.cloudflare.com/pages/configuration/serving-pages/#not-found-behavior). Preset, branch, comando, saída e hospedagem permanecem os mesmos.

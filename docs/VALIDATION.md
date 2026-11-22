@@ -1,89 +1,132 @@
-# Validação executada
+# Validação — GOAL 02
 
-Data: **21/11/2026**, ambiente Linux x86_64, Node 24.20.0 e npm 11.19.0. Resultados locais reais; publicação Cloudflare não realizada.
+Validação do artefato estático, sem deployment Cloudflare e sem métricas de campo. Baseline, métricas e capturas estão em `docs/goal02/` e `artifacts/goal02/`.
 
-## Instalação e análise estática
+## Gate completo executado
 
-| Verificação                                 | Resultado                                                                           |
-| ------------------------------------------- | ----------------------------------------------------------------------------------- |
-| npm ci                                      | Instalação reproduzível concluída pelo package-lock.json                            |
-| astro check                                 | 0 erros, 0 avisos, 0 hints                                                          |
-| vue-tsc --noEmit                            | Aprovado; inclui o componente Vue no TypeScript strict                              |
-| npm run lint                                | Aprovado                                                                            |
-| npm run build                               | 13 páginas HTML estáticas: duas homes, dez estudos e 404                            |
-| npm run test:links com origem de teste      | 377 referências internas válidas; 12 entradas no sitemap; hreflang absoluto pareado |
-| npm audit --omit=dev --audit-level=moderate | 0 vulnerabilidades identificadas pelo registro no momento da execução               |
-| git diff --check                            | Sem erros de whitespace                                                             |
+```sh
+npm ci
+SITE_URL=https://portfolio.test npm run validate
+npm audit --audit-level=moderate
+```
 
-O build de SEO foi executado com `SITE_URL=https://portfolio.test`, domínio reservado exclusivamente para teste. Não é URL de produção. Sem SITE_URL/CF_PAGES_URL, o build local omite canonical/hreflang absoluto/sitemap, preservando o site navegável. No Cloudflare a origem é fornecida pelo ambiente e deve ser consolidada após confirmação do deploy.
+Node 24.20.0, npm 11.19.0, TypeScript 5.9.3, Playwright 1.65.1, axe 4.14.0 e Chromium 159.0.8154.6. A origem `.test` é reservada exclusivamente à validação local/CI dos metadados; não é URL de produção.
 
-## Playwright
+| Gate                           | Resultado real                                                                      |
+| ------------------------------ | ----------------------------------------------------------------------------------- |
+| npm ci                         | Instalação reproduzível concluída; lockfile preservado                              |
+| astro check + vue-tsc --noEmit | 0 erros, 0 avisos e 0 hints                                                         |
+| ESLint                         | Aprovado                                                                            |
+| Prettier                       | Aprovado                                                                            |
+| Testes do algoritmo            | 4 aprovados; comparação independente com BFS em 128 grades                          |
+| Build                          | 18 páginas HTML estáticas, incluindo dois fallbacks 404                             |
+| Links e SEO estático           | 584 referências internas, 16 entradas no sitemap e pares hreflang absolutos válidos |
+| Playwright                     | 72 testes aprovados nas seis larguras                                               |
+| npm audit                      | 0 vulnerabilidades identificadas pelo registro no momento da consulta               |
+| git diff --check               | Sem erros de whitespace                                                             |
 
-**18 testes aprovados** em Chromium 159.0.8154.6: desktop 1440 × 1000 e emulação mobile iPhone 13 (390 × 664 CSS pixels, DPR 3). Essa emulação usa Chromium, não comprova comportamento em Safari real.
+Logs locais: `artifacts/goal02/validation-final.log` e `artifacts/goal02/lighthouse-final.log`. O relatório navegável do Playwright está em `playwright-report/`. Esses resultados se referem ao portfólio; não são pontuações de qualidade ou certificações dos projetos apresentados.
 
-Cobertura:
+## Escopo dos testes de interface
 
-- Homes, cards, filtros por categoria e restauração da lista completa. Verificação adicional dos sete filtros: back-end 2, IA 1, pesquisa 1, sistemas 3, jogos 2, automação 1 e dados 1.
-- Tema claro/escuro persistido após reload e fallback com storage bloqueado.
-- Alternância de idioma preservando estudo e fragmento de seção.
-- Diagrama por teclado, estado selecionado e descrição anunciada.
-- Skip link, foco, menu mobile, Escape e fechamento após navegar.
-- Links de contato confirmados e ausência de e-mail, LinkedIn ou currículo inventados.
-- Dez páginas individuais e navegação entre as duas línguas.
-- 404 real e rotas de rascunho indisponíveis.
-- Ausência de erros JavaScript e violações CSP nas rotas percorridas.
-- axe-core com WCAG 2 A/AA, 2.1 A/AA e 2.2 A/AA: zero violações nos scans das 12 páginas de conteúdo, nos dois temas e dois tamanhos de tela (48 combinações).
-- Ausência de overflow horizontal nessas combinações.
-- Conteúdo e estudos acessíveis sem JavaScript.
-- Reduced motion e oito capturas das homes (idioma × tema × viewport).
+Seis viewports de 1000px de altura, DPR 1: **360, 390, 768, 1024, 1440 e 1920px**. Os dois menores usam touch/mobile em Chromium; não são testes em Safari real ou em aparelhos físicos.
 
-A fixture `scripts/serve.mjs` aplica os headers de `dist/_headers`; os testes não se limitam ao dev server. Foram corrigidos bloqueios de fontes incorporadas como data URLs, nomes acessíveis incompatíveis com o texto visível e uma canonical indevida na página 404.
+Os 12 fluxos são executados em cada largura:
 
-## Lighthouse
+1. Identidade profissional no h1, disponibilidade, especialidades e hero compacta.
+2. Sete filtros e ações públicas dos seis cards.
+3. Tema persistido, fallback quando storage está bloqueado e botão primário ativo.
+4. Idiomas pareados para estudo, laboratório e fragmento da home.
+5. Skip link por teclado, menu/Escape e contatos GitHub/LinkedIn autorizados nas duas seções.
+6. Diagrama original acessível por teclado, sem corrida de hidratação.
+7. Evidências, instruções de execução e limites dos 12 estudos traduzidos.
+8. A*: teclado, passos, animação, pausa, reset, reduced motion e custo 16 na grade livre.
+9. A*: destino inacessível, remoção de obstáculo ao posicionar endpoint e bloqueio de endpoints sobrepostos.
+10. Rotas públicas sem erros JavaScript/CSP ou mensagens editoriais; 404 e idioma corretos; rascunhos indisponíveis.
+11. axe e overflow depois de fontes/hidratação, nos dois temas e idiomas.
+12. Screenshots, impressão, JSON-LD/metadados e conteúdo dos estudos sem JavaScript.
 
-**Lighthouse 13.6.0**, Chrome headless 159.0.8154.6, dispositivo mobile simulado de 412 × 823, DPR 1.75, throttling simulado: RTT 150 ms, 1638,4 Kbps e CPU 4×. Uma execução final por rota, build estático servido em loopback com a CSP aplicada, origem de SEO reservada de teste. Resultados variam com máquina, rede e deployment.
+A fixture de produção usa **porta 4325**, `reuseExistingServer: false` e os headers de `dist/_headers`. Ela não reutiliza um servidor Astro de desenvolvimento que poderia esconder falhas da CSP.
 
-| Rota                                   | Desempenho | Acessibilidade | Boas práticas | SEO |
-| -------------------------------------- | ---------: | -------------: | ------------: | --: |
-| /                                      |        100 |            100 |           100 | 100 |
-| /en/                                   |        100 |            100 |           100 | 100 |
-| /projects/sistemas-distribuidos/       |        100 |            100 |           100 | 100 |
-| /projects/otimizacao-colonia-formigas/ |        100 |            100 |           100 | 100 |
+### Acessibilidade automatizada
 
-Resumo versionado: [LIGHTHOUSE_SUMMARY.json](LIGHTHOUSE_SUMMARY.json). Relatórios HTML/JSON completos estão localmente em `artifacts/lighthouse/`, excluídos do Git. A primeira medição sem origem identificou hreflang relativo; a emissão foi corrigida e a tabela mostra a avaliação posterior. Uma tentativa de reavaliação foi interrompida após o encerramento do servidor de teste; os resultados finais vieram de nova execução concluída com servidor dedicado.
+Foram avaliadas **192 combinações**: 16 páginas de conteúdo × 2 temas × 6 larguras, incluindo o laboratório em estado executado. Tags WCAG 2 A/AA, 2.1 A/AA e 2.2 A/AA. Zero violações nos scans finais e zero overflow acima da largura configurada, após carregar fontes e hidratar as ilhas relevantes.
 
-Reprodução, em terminais separados:
+Também houve validação funcional de teclado, foco, rótulos, estados anunciados e impressão. As capturas finais de desktop/mobile, laboratório e PDF foram inspecionadas visualmente; as seis larguras também foram conferidas em capturas dos testes. Isso não equivale a certificação integral WCAG ou teste manual com leitor de tela. A avaliação de recrutamento é heurística, sem participantes reais.
+
+## Correções verificadas durante a evolução
+
+- O h1 anterior privilegiava o slogan; agora apresenta Daniel Kulique.
+- Uma camada decorativa com inset negativo causava overflow em tablet; o pseudo-elemento foi limitado à hero.
+- O diagrama podia receber Enter antes de hidratar; agora controles ficam desabilitados até estar pronto e os testes aguardam sua habilitação.
+- O skip link aparecia no PDF original; estilos de impressão o ocultam junto da navegação e dos controles.
+- A cor acinzentada do CTA não se reproduziu no navegador. O estilo primário passou a ter fundo, contraste e opacidade explícitos; os testes verificam aparência ativa.
+- A canonical da página 404 permanece ausente; os fallbacks por idioma são excluídos do sitemap.
+- Mensagens de construção/confirmação saíram do conteúdo público; limites técnicos e resultados de validação continuam visíveis nos estudos.
+
+## Comparação de layout
+
+Medição local em Chromium, viewport de 1000px de altura, fontes carregadas e scroll no topo. Valores arredondados; os JSONs preservam as medidas completas.
+
+| Medida                             |    Antes |  Depois |
+| ---------------------------------- | -------: | ------: |
+| Hero em 1440px                     |  793,8px | 515,5px |
+| Início da seção Projetos em 1440px |  882,8px | 604,5px |
+| Hero em 390px                      | 1285,3px | 563,1px |
+| Início da seção Projetos em 390px  | 1358,3px | 636,1px |
+
+A hero ficou aproximadamente 35% menor em desktop e 56% menor a 390px. Isso mede layout, não melhora de conversão ou comportamento de recrutadores. [Baseline](goal02/baseline-layout.json) e [layout final](goal02/after-layout.json).
+
+| Comparação     | Antes                                                   | Depois                                                 |
+| -------------- | ------------------------------------------------------- | ------------------------------------------------------ |
+| Desktop escuro | [Captura](goal02/screenshots/before-desktop-dark.webp)  | [Captura](goal02/screenshots/after-desktop-dark.webp)  |
+| Desktop claro  | [Captura](goal02/screenshots/before-desktop-light.webp) | [Captura](goal02/screenshots/after-desktop-light.webp) |
+| Mobile escuro  | [Captura](goal02/screenshots/before-mobile-dark.webp)   | [Captura](goal02/screenshots/after-mobile-dark.webp)   |
+| Mobile claro   | [Captura](goal02/screenshots/before-mobile-light.webp)  | [Captura](goal02/screenshots/after-mobile-light.webp)  |
+
+[Laboratório desktop](goal02/screenshots/lab-1440.webp), [laboratório mobile](goal02/screenshots/lab-390.webp), [estudo desktop](goal02/screenshots/case-1440.webp) e [estudo mobile](goal02/screenshots/case-390.webp). Originais completos e PDFs: `artifacts/goal02/before/` e `artifacts/goal02/after/`.
+
+## Lighthouse comparado à baseline
+
+Lighthouse **13.6.0**, Chrome headless 159.0.8154.6, mobile simulado **412 × 823**, DPR **1,75**, throttling simulado: RTT **150ms**, **1638,4 Kbps**, CPU **4×**. Build estático em loopback com CSP. Uma execução final por rota, sem esconder conteúdo do auditor ou alterar limites de pontuação.
+
+| Rota                                   | Antes D/A/BP/SEO      | Depois D/A/BP/SEO     |
+| -------------------------------------- | --------------------- | --------------------- |
+| /                                      | 100 / 100 / 100 / 100 | 100 / 100 / 100 / 100 |
+| /en/                                   | 100 / 100 / 100 / 100 | 100 / 100 / 100 / 100 |
+| /projects/sistemas-distribuidos/       | 100 / 100 / 100 / 100 | 100 / 100 / 100 / 100 |
+| /projects/otimizacao-colonia-formigas/ | 100 / 100 / 100 / 100 | 100 / 100 / 100 / 100 |
+| /lab/                                  | Não existia           | 100 / 100 / 100 / 100 |
+| /en/lab/                               | Não existia           | 100 / 100 / 100 / 100 |
+
+D: desempenho; A: acessibilidade; BP: boas práticas. A baseline foi coletada antes das alterações; o build final usa a origem reservada de teste para validar os metadados absolutos. Ambas são medições locais, sem alegação de dados de campo. O novo experimento não reduz as pontuações observadas nessa execução.
+
+Resumos: [antes](goal02/baseline-lighthouse.json), [depois](goal02/after-lighthouse.json). [Condições e métricas reais](goal02/lighthouse-details.json) incluem FCP, LCP, CLS, TBT e Speed Index por rota. TBT não é INP; não foram medidas métricas de campo, INP de usuários ou conversão. Relatórios completos HTML/JSON ficam em `artifacts/lighthouse/`.
+
+Reprodução:
 
 ```sh
 SITE_URL=https://portfolio.test npm run build
-PORT=4322 node scripts/serve.mjs
+PORT=4323 node scripts/serve.mjs
+# Em outro terminal:
+LIGHTHOUSE_BASE_URL=http://127.0.0.1:4323 npm run audit:performance
 ```
 
-```sh
-LIGHTHOUSE_BASE_URL=http://127.0.0.1:4322 npm run audit:performance
-```
+## Evidências dos projetos apresentados
 
-O script usa a instalação Chromium do Playwright. Executar novamente contra a URL real após o deploy; esses números não são medições de produção e não garantem conformidade integral com WCAG.
+Em cópias descartáveis de commits públicos, sem modificar os repositórios originais:
 
-## Inspeção visual
+- A* C++: **539/539** verificações aprovadas em isolamento.
+- Java TesteArquivo: **11** verificações aprovadas.
+- Java TesteEp1: **214** verificações aprovadas.
+- Bateria adicional Java de comunicação: **42 casos, 536 verificações, uma falha** na comparação de saída por causa do aviso JAVA_TOOL_OPTIONS no subprocesso; não é apresentada como suíte integralmente aprovada ou vulnerabilidade demonstrada.
 
-Homes em desktop/mobile e temas claro/escuro foram capturadas e inspecionadas, assim como um estudo e o menu aberto. Ajustes incluíram metadados com no mínimo 12px e quebras responsivas no diagrama. Nenhuma sobreposição ou rolagem horizontal foi observada nas combinações testadas.
+As condições de isolamento e limites constam do inventário. Não foi possível gerar novas capturas gráficas isoladas sem display virtual nem executar os projetos Python sem as dependências correspondentes. Foram usados screenshots/protótipos públicos originais e evidências de código/documentação claramente identificadas, sem produzir telas, GIFs ou benchmarks fictícios.
 
-Prévias WebP versionadas, derivadas das capturas PNG:
+## Limites e operação
 
-- [Desktop · pt-BR · escuro](screenshots/desktop-pt-dark.webp)
-- [Desktop · inglês · claro](screenshots/desktop-en-light.webp)
-- [Mobile · pt-BR · escuro](screenshots/mobile-pt-dark.webp)
-- [Mobile · inglês · claro](screenshots/mobile-en-light.webp)
-- [Estudo técnico](screenshots/study-desktop.webp)
-- [Menu mobile](screenshots/menu-mobile.webp)
+A revisão de segurança foi focada em fonte, exposição de dados, dependências e política do build; não é um pen test abrangente. O audit de dependências não prova ausência de todas as vulnerabilidades. O código privado, corpora e documentos pessoais não foram incorporados.
 
-Originais PNG: `artifacts/screenshots/`. Relatório Playwright: `playwright-report/`. O workflow preserva suas capturas e relatório como artefatos por 14 dias.
+Sem deployment confirmado, não há URL de produção ou medição de compressão/CDN em campo. A configuração Astro/Cloudflare foi preservada. E-mail, currículo, datas e detalhes de projetos privados dependem de dados/autorização do proprietário; continuam documentados e não geram ações quebradas.
 
-## Limites
-
-Não foram reexecutadas as suítes dos projetos apresentados. Não houve auditoria científica, teste com leitor de tela, Safari real ou deploy Cloudflare. Código e conteúdo privados não foram consultados nem copiados ao produzir os estudos; rascunhos são excluídos das rotas. As pendências editoriais constam em CONTENT_INVENTORY.md e ROADMAP.md.
-
-## GitHub Actions
-
-O [run 44936116866](https://github.com/DanielKulique/Portfolio/actions/runs/44936116866), no commit `22187cb7bac7eaba328982919f08a52e62676f4b`, concluiu com **success**. Passaram npm ci, tipos Astro/Vue, lint, build, links e Playwright, além do upload do relatório e capturas. Um ajuste posterior limitou-se à formatação de theme.js/SystemDiagram e ao registro desses resultados; os quatro testes locais de tema/diagrama foram repetidos e aprovados.
+O estado do versionamento e do GitHub Actions será registrado junto da entrega. O workflow inclui os gates locais e preserva os artefatos de interface por 14 dias.

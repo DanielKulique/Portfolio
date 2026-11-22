@@ -1,45 +1,57 @@
 # Arquitetura
 
-## Geração estática
+## Geração estática e responsabilidades
 
-Astro produz HTML por rota, sem SSR, banco ou credenciais. O build lê Content Collections; nenhum acesso ao GitHub ocorre em runtime. Os dados não dependem de serviços externos para navegar. Não se adicionou adapter Cloudflare porque o resultado é puramente estático.
+Astro gera HTML por rota, sem SSR, API obrigatória ou banco. O build lê Content Collections; não acessa o GitHub em runtime. Framework, versões fixadas, configuração Cloudflare e identidade visual anteriores foram preservados.
 
-- `BaseLayout`: HTML semântico, idioma, SEO, navegação e rodapé.
-- `HomePage`: composição reutilizada por `/` e `/en/`.
-- `Hero`, `Projects`, `ProfileSections`: conteúdo organizado em seções.
-- `CaseStudy`: onze campos técnicos, contexto, tecnologias, fontes e imagens.
-- `SystemDiagram.vue`: única ilha Vue; estado local de seleção da camada. Hidrata no carregamento do hero e quando visível no estudo. Não simula uma conexão real.
-- `ProjectVisual`: SVG/CSS original com legenda de esquema conceitual; não é apresentado como screenshot.
-- `src/data`: perfil confirmado e relação entre tecnologias e estudos.
-- `src/i18n`: rotas pareadas e traduções da interface.
+- `BaseLayout`: documento semântico, idioma, SEO, Person/WebSite em JSON-LD e shell compartilhado.
+- `Hero`: nome, especialidade, disponibilidade, formação e links confirmados.
+- `ProfessionalLinks` + `src/data/profile.ts`: um contrato tipado para contatos e currículo autorizado; ações ausentes não são renderizadas.
+- `Projects`: seleção ordenada, filtros derivados dos projetos publicados e ações de estudo/código/demonstração válida.
+- `ProjectEvidence`: captura original, protótipo, trecho de código ou saída real de teste com proveniência explícita. O Astro otimiza imagens locais.
+- `CaseStudy`: visão geral, problema/objetivo, contexto, contribuição, arquitetura, implementação, decisões, desafios, evidências, testes, resultados, limites, aprendizados, execução e fontes.
+- `ProfileSections`: formação, sete áreas de competências com referências explícitas, pesquisa em formação e contato.
+- `EngineeringSection`: acesso ao experimento funcional; o diagrama de reservas foi preservado em disclosure abaixo dos projetos.
+- `SystemDiagram.vue`: seleção de camadas; hidrata quando visível e mantém controles desabilitados até estar pronto.
+- `PathfindingLab.vue`: editor acessível e reprodução do traço A*. Uma ilha local, sem servidor ou dados de pesquisa.
+- `src/lib/algorithms/astar.ts`: busca pura, heap binário, Manhattan, validação e retorno de caminho/expansões/custo. Independente do Vue.
 
-## Conteúdo e publicação
+## Modelo editorial
 
-Cada JSON tem slug, draft, ordem, categorias, tecnologias, visual, fontes HTTPS, imagens e textos pt-BR/en. O esquema exige todos os campos de contexto, problema, objetivo, contribuição, solução, arquitetura, decisões, desafios, testes, resultados, limitações e aprendizados. Imagens possuem alt nas duas línguas; `demo` é opcional.
+Os JSONs em `src/content/projects` possuem slug, draft, ordem, categorias, tecnologias, status/contexto, evidências, fontes e textos pt-BR/en. O esquema exige os campos técnicos e, para publicar, valida visão geral, instruções de execução e um artefato de evidência utilizável e atribuído nas duas línguas.
 
-Apenas `!draft` entra nos getStaticPaths e no grid. Fontes públicas são obrigatórias para publicar. Rascunhos não são importados por componentes cliente. As fontes são revisões imutáveis dos repositórios públicos. Os arquivos locais de conteúdo são informação editorial autorizada, nunca um espelho do código de projetos privados.
+Os seis estudos têm fontes públicas fixadas por commit. Screenshot, protótipo, código e saída de teste não são intercambiáveis; cada legenda identifica o tipo real. Modelagem UML não é apresentada como sistema implementado, e uma demonstração independente não representa o executável C++.
 
-Para adicionar uma demonstração ou imagem, estenda o renderer do estudo com componente específico ou dados validados. Para pipelines, comparação de decisões, timeline e similaridade sintética, prefira HTML/SVG primeiro e ilhas apenas quando existir estado. Exemplos futuros devem indicar seus dados e limites.
+Somente `!draft` entra no grid, filtros e getStaticPaths. Nenhum rascunho é enviado às ilhas Vue. Pesquisa/cursos/extensão privados não foram lidos nem copiados. Sinopses autorizadas permanecem internas quando não bastam para um estudo completo. Ausência de código público não equivale a ausência de experiência; um futuro estudo editorial de projeto privado exige conteúdo suficiente e autorizado, sem obter seu código.
 
-## Idiomas
+## Idiomas e SEO
 
-pt-BR usa `/`, inglês `/en/`. Estudos usam o mesmo slug em `/projects/` e `/en/projects/`. O seletor mantém a rota e o fragmento da seção. `lang` é sempre emitido; com origem configurada são emitidos hreflang absoluto, canonical, x-default e Open Graph completo. O build local sem origem omite metadados que precisariam de um domínio, em vez de inventar uma URL. A página 404 é bilíngue para recuperação e usa `noindex`.
+pt-BR: `/`, `/projects/<slug>/`, `/lab/`. Inglês: prefixo `/en/`. O seletor mantém rota correspondente e fragmento. Interface, laboratório, estudos e metadados são traduzidos. Identificadores do código e títulos de fontes originais permanecem como publicados.
+
+Com SITE_URL/CF_PAGES_URL configurado, o build emite canonical/hreflang/x-default absolutos, Open Graph com cartão por idioma, sitemap e robots. JSON-LD Person contém somente nome, formação textual e perfis confirmados; WebSite é emitido com a origem configurada. A serialização escapa `<` antes da inserção no HTML.
+
+Sem origem, o build local não inventa domínio. O CI usa a origem reservada `https://portfolio.test` apenas para exercitar SEO. Não há métricas falsas, ratings, títulos profissionais ou credenciais inventadas no dado estruturado.
+
+O 404 padrão é pt-BR; `en/404.html` atende caminhos ingleses. Astro emite inicialmente `/en/404/index.html`; `security.mjs` move esse artefato para o nome esperado pelo Pages antes de gerar hashes. O sitemap exclui os dois fallbacks. Isso segue a busca pelo 404 mais próximo no diretório, documentada pelo [Cloudflare](https://developers.cloudflare.com/pages/configuration/serving-pages/#not-found-behavior), sem mudar configurações de hospedagem.
 
 ## Interações e acessibilidade
 
-Menu, tema e filtros usam pequenos scripts nativos tipados. Sem JavaScript, a lista completa e os estudos continuam acessíveis, e os filtros ficam ocultos. No diagrama os botões nativos funcionam com Tab/Enter/Espaço, `aria-pressed` e região `aria-live`. O menu possui estado expandido, Escape e retorno de foco. Dark/light mode persiste com fallback quando o storage está indisponível. Reduced motion remove deslocamentos e transições.
+Menu, filtros e tema usam scripts nativos tipados. Sem JavaScript, o conteúdo dos projetos/estudos continua disponível. O laboratório informa a necessidade de JS para executar o experimento e mantém explicação estática. Tab/Enter/Espaço e setas cobrem os controles apropriados; a grade usa roving tabindex. Os estados são anunciados e os endpoints não se sobrepõem.
 
-## Segurança
+Reduced motion remove transições e mostra o resultado da busca sem animação automática. O skip link só aparece ao receber foco visível. Estilos de impressão removem navegação e controles, mantêm conteúdo legível e evitam o skip link sobreposto ao PDF. A grade decorativa foi contida na hero para corrigir overflow real em tablet.
 
-`security.mjs` coleta hashes SHA-256 dos scripts e estilos inline gerados e emite `dist/_headers` com CSP sem unsafe-inline/unsafe-eval. Somente recursos locais são necessários. O build gera robots e ativa sitemap quando existe origem. A fixture HTTP aplica a mesma política e respostas 404 reais; Playwright detecta erros de execução e CSP. Não há formulário, coleta de dados ou analytics.
+## Segurança e validação
 
-## Referências oficiais consultadas
+`npm run build` sempre gera `_headers` com hashes SHA-256 do HTML final. CSP não usa unsafe-inline/unsafe-eval. Fontes, imagens, algoritmos e scripts são locais. Não há formulário, coleta de dados ou analytics. Os contatos são navegação externa explícita.
 
+A fixture HTTP aplica os headers e o fallback por idioma. Playwright usa exclusivamente a porta 4325, sem reutilizar o dev server; espera fontes e hidratação antes de medir. A suite verifica seis larguras, dois temas/idiomas, conteúdo público, erros de console, CSP, teclado e a11y. O módulo A* tem um oráculo BFS independente. As comparações de Lighthouse e screenshots ficam na documentação de validação.
+
+## Referências consultadas
+
+- https://docs.astro.build/en/guides/content-collections/
 - https://docs.astro.build/en/guides/integrations-guide/vue/
 - https://docs.astro.build/en/guides/styling/#tailwind
-- https://docs.astro.build/en/guides/content-collections/
-- https://docs.astro.build/en/reference/configuration-reference/
 - https://developers.cloudflare.com/pages/framework-guides/deploy-an-astro-site/
-- https://nodejs.org/en/about/previous-releases
+- https://developers.cloudflare.com/pages/configuration/serving-pages/
 
-As versões concretas e reproduzíveis estão no package-lock.json. Atualizações devem validar as peer dependencies novamente.
+Detalhes do experimento: ENGINEERING_LAB.md. Resultados e limites reais: VALIDATION.md.

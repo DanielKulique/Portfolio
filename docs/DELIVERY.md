@@ -1,4 +1,6 @@
-# Relatório de entrega — primeira versão
+# Relatório histórico de entrega — primeira versão
+
+Este documento registra o GOAL 01. A evolução atual está em GOAL_02_DELIVERY.md e VALIDATION.md.
 
 ## 1. Implementação
 
